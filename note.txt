@@ -1,0 +1,4 @@
+else cases :
+1. if some one passed next exam ..then what shold do ?
+2. if single exits under a single subject . what shold do for that ?
+2. if data retrived two or 3 years ? then what should to for that ?

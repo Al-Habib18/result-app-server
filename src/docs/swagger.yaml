@@ -1,0 +1,629 @@
+# @format
+
+openapi: 3.0.0
+info:
+    version: 1.0.0
+    title: "Result App"
+    description: "This is a sample server for Result App"
+servers:
+    # Added by API Auto Mocking Plugin
+    - description: SwaggerHub API Auto Mocking
+      url: https://virtserver.swaggerhub.com/Al-Habib18/result-app/1.0.0
+    - description: dev server
+      url: http://localhost:4005/api/v1
+
+tags:
+    - name: subjects
+      description: subjects operations
+    - name: upload
+      description: upload operations
+
+paths:
+    /subjects:
+        post:
+            tags: [subjects]
+            description: create a new subjects
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    example: Python programming
+                                code:
+                                    type: string
+                                    example: 285585
+                                theoryFailed:
+                                    type: array
+                                    example: [608690, 608691, 608692]
+                                practicalFailed:
+                                    type: array
+                                    example: [608690, 608691, 608692]
+
+                            required: [code]
+
+            responses:
+                "201":
+                    description: Subject Created successful
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: Subject Created successful
+                                    data:
+                                        type: object
+                                        properties:
+                                            id:
+                                                type: string
+                                                example: ksf12kdfh23kd23
+                                            name:
+                                                type: string
+                                                example: Python programming
+                                            code:
+                                                type: string
+                                                example: 285585
+                                            theoryFailed:
+                                                type: array
+                                                example:
+                                                    [608690, 608691, 608692]
+                                            practicalFailed:
+                                                type: array
+                                                example:
+                                                    [608690, 608691, 608692]
+                                            createdAt:
+                                                type: string
+                                                format: date-time
+
+                "400":
+                    $ref: "#/components/responses/400"
+                "500":
+                    $ref: "#/components/responses/500"
+        get:
+            description: Retrive a list of Subjects
+            tags: [subjects]
+            parameters:
+                - $ref: "#/components/parameters/pageParam"
+                - $ref: "#/components/parameters/limitParam"
+            responses:
+                "200":
+                    description: Get a list of Payment
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: A List of Subject Retrived successfully
+                                    data:
+                                        type: array
+                                        items:
+                                            allOf:
+                                                - type: object
+
+                                                  properties:
+                                                      id:
+                                                          type: string
+                                                          example: ksf12kdfh23kd23
+                                                      name:
+                                                          type: string
+                                                          example: Python programming
+                                                      code:
+                                                          type: string
+                                                          example: 285585
+                                                      theoryFailed:
+                                                          type: array
+                                                          example:
+                                                              [
+                                                                  608690,
+                                                                  608691,
+                                                                  608692,
+                                                              ]
+                                                      practicalFailed:
+                                                          type: array
+                                                          example:
+                                                              [
+                                                                  608690,
+                                                                  608691,
+                                                                  608692,
+                                                              ]
+                                                      createdAt:
+                                                          type: string
+                                                          format: date-time
+
+                                                - $ref: "#/components/schemas/Timestamp"
+                                    pagination:
+                                        $ref: "#/components/schemas/Pagination"
+                                    links:
+                                        type: object
+                                        properties:
+                                            self:
+                                                type: string
+                                                format: url
+                                                example: /payments?page=2&limit=5
+                                            next:
+                                                type: string
+                                                format: url
+                                                example: /payments?page=3&limit=5
+                                            prev:
+                                                type: string
+                                                format: url
+                                                example: /payments?page=1&limit=5
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+
+    /subjects/{id}:
+        get:
+            tags: [subjects]
+            description: Retrive a single Subject by id
+            parameters:
+                - $ref: "#/components/parameters/idPathParam"
+            responses:
+                "200":
+                    description: Subject  retrive  successful
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: Payment retrive  successful
+                                    data:
+                                        $ref: "#/components/schemas/Subject"
+
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+        put:
+            tags: [subjects]
+            description: Update a Subject By id
+            parameters:
+                - $ref: "#/components/parameters/idPathParam"
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    example: Python programming
+                                code:
+                                    type: string
+                                    example: 285585
+                                theoryFailed:
+                                    type: array
+                                    example: [608690, 608691, 608692]
+                                practicalFailed:
+                                    type: array
+                                    example: [608690, 608691, 608692]
+
+            responses:
+                "200":
+                    description: Subject updated  successfully
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: Subject updated  successfully
+                                    data:
+                                        $ref: "#/components/schemas/Subject"
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+        delete:
+            tags: [subjects]
+            description: Delete a Subject By id
+            parameters:
+                - $ref: "#/components/parameters/idPathParam"
+            responses:
+                "204":
+                    description: Payment deleted  successfully
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+    /subjects/search/codes/{code}:
+        get:
+            tags: [subjects]
+            parameters:
+                - $ref: "#/components/parameters/codePathParam"
+            responses:
+                "200":
+                    description: Subject retrive  successful
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: Subject retrive  successful
+                                    data:
+                                        $ref: "#/components/schemas/Subject"
+
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+    /subjects/search/names/{name}:
+        get:
+            tags: [subjects]
+            parameters:
+                - $ref: "#/components/parameters/namePathParam"
+            responses:
+                "200":
+                    description: Subject retrive  successful
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: Subject retrive  successful
+                                    data:
+                                        $ref: "#/components/schemas/Subject"
+
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+
+    /subjects/update/codes/{code}:
+        put:
+            tags: [subjects]
+            parameters:
+                - $ref: "#/components/parameters/codePathParam"
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    example: Python programming
+                                code:
+                                    type: string
+                                    example: 285585
+                                theoryFailed:
+                                    type: array
+                                    example: [608690, 608691, 608692]
+                                practicalFailed:
+                                    type: array
+                                    example: [608690, 608691, 608692]
+                            required:
+                                - code
+            responses:
+                "200":
+                    description: Subject updated  successfully
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: Subject updated  successfully
+                                    data:
+                                        $ref: "#/components/schemas/Subject"
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+    /subjects/update/names/{name}:
+        put:
+            tags: [subjects]
+            parameters:
+                - $ref: "#/components/parameters/namePathParam"
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    example: Python programming
+                                code:
+                                    type: string
+                                    example: 285585
+                                theoryFailed:
+                                    type: array
+                                    example: [608690, 608691, 608692]
+                                practicalFailed:
+                                    type: array
+                                    example: [608690, 608691, 608692]
+                            required:
+                                - name
+            responses:
+                "200":
+                    description: Subject updated  successfully
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: Subject updated  successfully
+                                    data:
+                                        $ref: "#/components/schemas/Subject"
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+
+    /subjects/delete/{code}:
+        delete:
+            tags: [subjects]
+            parameters:
+                - $ref: "#/components/parameters/codePathParam"
+            responses:
+                "204":
+                    description: Subject deleted  successfully
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+
+    /upload:
+        post:
+            tags: [upload]
+            requestBody:
+                content:
+                    "multipart/form-data":
+                        schema:
+                            type: object
+                            properties:
+                                file:
+                                    type: string
+                                    format: binary
+            responses:
+                "200":
+                    description: File uploaded successfully
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: File uploaded successfully
+                "400":
+                    $ref: "#/components/responses/400"
+                "500":
+                    $ref: "#/components/responses/500"
+components:
+    schemas:
+        Subject:
+            type: object
+            properties:
+                id:
+                    type: string
+                    example: ksf12kdfh23kd23
+                name:
+                    type: string
+                    example: Python programming
+                code:
+                    type: string
+                    example: 285585
+                theoryFailed:
+                    type: array
+                    example: [608690, 608691, 608692]
+                practicalFailed:
+                    type: array
+                    example: [608690, 608691, 608692]
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+        Timestamp:
+            type: object
+            properties:
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+            required: [createdAt, updatedAt]
+        Pagination:
+            type: object
+            properties:
+                page:
+                    type: integer
+                    format: int32
+                    example: 2
+                limit:
+                    type: integer
+                    format: int32
+                    example: 10
+
+                next:
+                    type: integer
+                    format: int32
+                    example: 3
+                prev:
+                    type: integer
+                    format: int32
+                    example: 3
+                totalPage:
+                    type: integer
+                    format: int32
+                    example: 5
+                totalItems:
+                    type: integer
+                    format: int32
+                    example: 400
+            required:
+                - page
+                - limit
+                - totalPage
+                - totalItems
+
+    responses:
+        "400":
+            description: "bad request"
+            content:
+                "application/json":
+                    schema:
+                        type: object
+                        properties:
+                            code:
+                                type: integer
+                                format: int32
+                                example: 400
+                            error:
+                                type: string
+                                example: Bad request
+                            message:
+                                type: string
+                                example: We are sorry for the inconvenience. Please try again later
+
+        "404":
+            description: "not found"
+            content:
+                "application/json":
+                    schema:
+                        type: object
+                        properties:
+                            code:
+                                type: integer
+                                format: int32
+                                example: 404
+                            error:
+                                type: string
+                                example: not found
+                            message:
+                                type: string
+                                example: We are sorry for the inconvenience. Please try again later
+
+        "401":
+            description: unauthorized
+            content:
+                "application/json":
+                    schema:
+                        type: object
+                        properties:
+                            code:
+                                type: integer
+                                format: int32
+                                example: 401
+                            error:
+                                type: string
+                                example: unauthorized
+                            message:
+                                type: string
+                                example: You don't have the right permission
+
+        "500":
+            description: Internal Server Error
+            content:
+                "application/json":
+                    schema:
+                        type: object
+                        properties:
+                            code:
+                                type: integer
+                                format: int32
+                                example: 500
+                            error:
+                                type: string
+                                example: internale server Error
+                            message:
+                                type: string
+                                example: We are sorry for the inconvenience. Please try again later
+    parameters:
+        pageParam:
+            in: query
+            name: page
+            description: current page number
+            schema:
+                type: integer
+                format: int32
+                example: 3
+        limitParam:
+            in: query
+            name: limit
+            description: maximum items to be returned
+            schema:
+                type: integer
+                format: int32
+                example: 10
+        idPathParam:
+            in: path
+            name: id
+            required: true
+            description: item id
+            schema:
+                type: string
+                example: kdsf12ksdf32sdf232
+        codePathParam:
+            in: path
+            name: code
+            required: true
+            description: item code
+            schema:
+                type: string
+                example: 285585
+        namePathParam:
+            in: path
+            name: name
+            required: true
+            description: item name
+            schema:
+                type: string
+                example: Python programming
