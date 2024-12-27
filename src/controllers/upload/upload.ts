@@ -39,8 +39,6 @@ const uploadController = async (req: Request, res: Response) => {
         const unformatedResult = getUnformatedResult(text);
         const results = getFormatResults(unformatedResult);
 
-        await fs.unlink(filePath);
-
         if (results.length === 0)
             return notFound(res, "No data found in the PDF");
 
@@ -48,10 +46,10 @@ const uploadController = async (req: Request, res: Response) => {
             const { code } = subject;
             const isExistsSubject = await findByCode(code);
             if (!isExistsSubject) {
-                await createSubject(subject);
+                await createSubject(subject); // create a new subject
             }
 
-            //TODO: update subject theroyFailed and practicalFailed
+            // push theroyFailed and practicalFailed
             await addFailedRolls(subject);
         });
 
@@ -63,7 +61,15 @@ const uploadController = async (req: Request, res: Response) => {
         return res
             .status(500)
             .json({ error: "Failed to process the PDF file." });
-    } //TODO:  implement final block to delete file
+    } finally {
+        if (filePath) {
+            try {
+                await fs.unlink(filePath);
+            } catch (error) {
+                console.error("Error deleting file:", error);
+            }
+        }
+    }
 };
 
 export default uploadController;
