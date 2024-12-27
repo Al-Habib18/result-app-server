@@ -1,7 +1,8 @@
 /** @format */
 
 const router = require("express").Router();
-const uploadController = require("../controllers/pdfUpload");
+import { uploadController } from "@controllers/upload/index";
+import upload from "../middlewares/multer";
 
 router.post("/", uploadController);
 

@@ -1,11 +1,11 @@
 /** @format */
 const router = require("express").Router();
-// const upload = require("./../midlware/index");
 
 const subjectRoutes = require("./subjectRoutes");
-// const uploadRoutes = require("./uploadRoutes");
+const uploadRoutes = require("./uploadRoutes");
+import upload from "@middlewares/multer";
 
 router.use("/api/v1/subjects", subjectRoutes);
-// router.use("/api/v1/upload", upload.single("file"), uploadRoutes);
+router.use("/api/v1/upload", upload.single("file"), uploadRoutes);
 
-module.exports = router;
+export default router;

@@ -26,8 +26,6 @@ const updateSubject = async (
             },
         });
 
-        console.log("Subject updated successfully:", subject);
-
         return subject;
     } catch (error) {
         console.error("Error updating subject:", error);

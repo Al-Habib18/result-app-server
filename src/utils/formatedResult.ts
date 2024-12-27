@@ -6,7 +6,7 @@ interface SubjectNames {
 }
 
 const getFormattedResults = (
-    data: Array<{ rollNumber: string, subjectCodes: string[] }>,
+    data: Array<{ rollNumber: string; subjectCodes: string[] }>,
     subjectNames: SubjectNames = {}
 ): Array<any> => {
     const formattedData: Record<string, any> = {};
@@ -16,32 +16,31 @@ const getFormattedResults = (
 
         subjectCodes.forEach((code) => {
             const [subjectBaseCode, type] = code.split("(");
-            const isTheory = type === "T)";
-            const isBoth = type === "T,P)" || "P,T)";
+            const isTheoryFailed = type === "T)";
+            const isBothFailed = type === "T,P)" || "P,T)";
 
             if (!formattedData[subjectBaseCode]) {
                 formattedData[subjectBaseCode] = {
-                    subject_code: subjectBaseCode,
-                    subject_name:
-                        subjectNames[subjectBaseCode] || "Unknown Subject",
-                    theory_failed: [],
-                    practical_failed: [],
+                    code: subjectBaseCode,
+                    name: subjectNames[subjectBaseCode] || "Unknown Subject",
+                    theoryFailed: [],
+                    practicalFailed: [],
                 };
             }
 
-            if (isBoth) {
-                formattedData[subjectBaseCode].theory_failed.push(
+            if (isBothFailed) {
+                formattedData[subjectBaseCode].theoryFailed.push(
                     Number(rollNumber)
                 );
-                formattedData[subjectBaseCode].practical_failed.push(
+                formattedData[subjectBaseCode].practicalFailed.push(
                     Number(rollNumber)
                 );
-            } else if (isTheory) {
-                formattedData[subjectBaseCode].theory_failed.push(
+            } else if (isTheoryFailed) {
+                formattedData[subjectBaseCode].theoryFailed.push(
                     Number(rollNumber)
                 );
             } else {
-                formattedData[subjectBaseCode].practical_failed.push(
+                formattedData[subjectBaseCode].practicalFailed.push(
                     Number(rollNumber)
                 );
             }
