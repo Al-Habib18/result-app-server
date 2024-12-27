@@ -9,6 +9,14 @@ import getUnformatedResult from "@utils/unformatedResult";
 import getFormatResults from "@utils/formatedResult";
 import findByCode from "@lib/subjects/findByCode";
 import createSubject from "@lib/subjects/create";
+import addFailedRolls from "@lib/subjects/addFailedRolls";
+
+type Subject = {
+    code: string;
+    name: string;
+    theoryFailed: string[];
+    practicalFailed: string[];
+};
 
 const uploadController = async (req: Request, res: Response) => {
     let filePath: string | null = null;
@@ -35,36 +43,20 @@ const uploadController = async (req: Request, res: Response) => {
 
         if (results.length === 0)
             return notFound(res, "No data found in the PDF");
-        let newSubjects: any = [];
 
-        results.map(async (result) => {
-            const { code, name, theoryFailed, practicalFailed } = result;
-            const subject = await findByCode(code);
-            if (!subject) {
-                //TODO: create a new subject
-                /*                 const data = {
-                    code,
-                    name,
-                    theoryFailed,
-                    practicalFailed,
-                } */
-                const subject = await createSubject({
-                    code,
-                    name,
-                    theoryFailed,
-                    practicalFailed,
-                });
-                newSubjects.push(subject);
+        results.map(async (subject: Subject) => {
+            const { code } = subject;
+            const isExistsSubject = await findByCode(code);
+            if (!isExistsSubject) {
+                await createSubject(subject);
             }
 
-            //TODO: update subject
-            // push theroyFailed and practicalFailed
+            //TODO: update subject theroyFailed and practicalFailed
+            await addFailedRolls(subject);
         });
 
-        console.log(newSubjects);
         return res.json({
             message: "PDF processed successfully",
-            data: newSubjects,
         });
     } catch (error) {
         console.error("Error processing PDF:", error);

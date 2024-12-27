@@ -8,4 +8,6 @@ export default async function deleteById(id: string) {
     });
 
     return subject;
+    /*     console.log("id : ", id);
+    return await prisma.subject.deleteMany({}); */
 }

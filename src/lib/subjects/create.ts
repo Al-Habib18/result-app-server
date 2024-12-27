@@ -9,6 +9,7 @@ const createSubject = async (data: {
     practicalFailed: string[] | [];
 }) => {
     try {
+        console.log("data: ", data);
         const subject = await prisma.subject.create({
             data,
             select: {
