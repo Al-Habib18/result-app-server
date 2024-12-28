@@ -9,6 +9,8 @@ import deleteByCodeController from "./deleteByCode";
 import deleteByIdController from "./deleteById";
 import updateByIdController from "./updateById";
 import updateByCodeController from "./updateByCode";
+import addRollsController from "../subject/addFailedRolls";
+import removeRollsController from "../subject/removeFailedRolls";
 
 export {
     createController,
@@ -20,4 +22,6 @@ export {
     deleteByIdController,
     updateByIdController,
     updateByCodeController,
+    addRollsController,
+    removeRollsController,
 };

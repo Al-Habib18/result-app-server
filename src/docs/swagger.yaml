@@ -17,6 +17,8 @@ tags:
       description: subjects operations
     - name: upload
       description: upload operations
+    - name: rolls
+      description: rolls operations (add or remove failed rolls)
 
 paths:
     /subjects:
@@ -91,7 +93,7 @@ paths:
                 - $ref: "#/components/parameters/limitParam"
             responses:
                 "200":
-                    description: Get a list of Payment
+                    description: Get a list of Subjects
                     content:
                         application/json:
                             schema:
@@ -145,15 +147,15 @@ paths:
                                             self:
                                                 type: string
                                                 format: url
-                                                example: /payments?page=2&limit=5
+                                                example: /subjects?page=2&limit=5
                                             next:
                                                 type: string
                                                 format: url
-                                                example: /payments?page=3&limit=5
+                                                example: /subjects?page=3&limit=5
                                             prev:
                                                 type: string
                                                 format: url
-                                                example: /payments?page=1&limit=5
+                                                example: /subjects?page=1&limit=5
                 "400":
                     $ref: "#/components/responses/400"
                 "401":
@@ -179,7 +181,7 @@ paths:
                                 properties:
                                     message:
                                         type: string
-                                        example: Payment retrive  successful
+                                        example: Subject retrive  successful
                                     data:
                                         $ref: "#/components/schemas/Subject"
 
@@ -243,7 +245,7 @@ paths:
                 - $ref: "#/components/parameters/idPathParam"
             responses:
                 "204":
-                    description: Payment deleted  successfully
+                    description: Subject deleted  successfully
                 "400":
                     $ref: "#/components/responses/400"
                 "401":
@@ -442,6 +444,83 @@ paths:
                                         example: File uploaded successfully
                 "400":
                     $ref: "#/components/responses/400"
+                "500":
+                    $ref: "#/components/responses/500"
+
+    /subjects/{code}/remove-rolls:
+        put:
+            tags: [subjects]
+            parameters:
+                - $ref: "#/components/parameters/codePathParam"
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            type: object
+                            properties:
+                                theoryFailed:
+                                    type: array
+                                    example: ["231231", "231231", "231231"]
+                                practicalFailed:
+                                    type: array
+                                    example: ["231231", "231231", "231231"]
+            responses:
+                "200":
+                    description: Subject updated  successfully
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: Subject updated  successfully
+                                    data:
+                                        $ref: "#/components/schemas/Subject"
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+    /subjects/{code}/add-rolls:
+        put:
+            tags: [subjects]
+            parameters:
+                - $ref: "#/components/parameters/codePathParam"
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            type: object
+                            properties:
+                                theoryFailed:
+                                    type: array
+                                    example: ["231231", "231231", "231231"]
+                                practicalFailed:
+                                    type: array
+                                    example: ["231231", "231231", "231231"]
+            responses:
+                "200":
+                    description: Subject updated  successfully
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: Subject updated  successfully
+                                    data:
+                                        $ref: "#/components/schemas/Subject"
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
                 "500":
                     $ref: "#/components/responses/500"
 components:

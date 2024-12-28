@@ -11,6 +11,8 @@ import {
     deleteByIdController,
     updateByIdController,
     updateByCodeController,
+    addRollsController,
+    removeRollsController,
 } from "@controllers/subject/index";
 
 router.post("/", createController);
@@ -26,4 +28,7 @@ router.get("/:id", findByIdController);
 router.delete("/:id", deleteByIdController);
 router.delete("/delete/:code", deleteByCodeController);
 
-module.exports = router;
+router.put("/:code/add-rolls", addRollsController);
+router.put("/:code/remove-rolls", removeRollsController);
+
+export default router;
