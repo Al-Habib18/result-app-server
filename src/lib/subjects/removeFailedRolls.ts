@@ -3,7 +3,7 @@
 import prisma from "../../schemas/index"; // Adjust path to your Prisma client
 import findByCode from "./findByCode";
 
-export default async function addFailedRolls(data: {
+export default async function removeFailedRolls(data: {
     code: string;
     theoryFailedRolls?: string[];
     practicalFailedRolls?: string[];
@@ -32,28 +32,25 @@ export default async function addFailedRolls(data: {
             ? subject.practicalFailed
             : [];
 
-        // Add new failed rolls and remove duplicates
-        const updatedTheoryFailed = Array.from(
-            new Set([...existingTheoryFailed, ...theoryFailedRolls])
-        );
-        const updatedPracticalFailed = Array.from(
-            new Set([...existingPracticalFailed, ...practicalFailedRolls])
-        );
+        const updatedTheoryFailed = existingTheoryFailed
+            .filter((roll): roll is string => typeof roll === "string") // Ensure rolls are strings
+            .filter((roll) => !theoryFailedRolls.includes(roll));
 
-        //TODO: Remove duplicates doesn't work properly
-        // Remove duplicates
-        const uniqueTheoryFailed = Array.from(new Set(updatedTheoryFailed));
-        const uniquePracticalFailed = Array.from(
-            new Set(updatedPracticalFailed)
-        );
+        const newTheoryFailed = Array.from(new Set(updatedTheoryFailed));
+
+        const updatedPracticalFailed = existingPracticalFailed
+            .filter((roll): roll is string => typeof roll === "string") // Ensure rolls are strings
+            .filter((roll) => !practicalFailedRolls.includes(roll));
+
+        const newPracticalFailed = Array.from(new Set(updatedPracticalFailed));
 
         // Update the subject in the database
         const updatedSubject = await prisma.subject.update({
             where: { code },
             data: {
                 ...subject,
-                theoryFailed: uniqueTheoryFailed,
-                practicalFailed: uniquePracticalFailed,
+                theoryFailed: newTheoryFailed,
+                practicalFailed: newPracticalFailed,
             },
             select: {
                 id: true,
