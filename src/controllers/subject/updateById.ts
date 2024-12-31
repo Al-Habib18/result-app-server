@@ -20,7 +20,7 @@ const updateByCodeController = async (req: Request, res: Response) => {
             ...(practicalFailed && { practicalFailed }),
         };
 
-        //TODO: check : what is updateData
+        //TODO: check : what is updateData?
 
         if (Object.keys(updateData).length === 0)
             return badRequest(res, "No data to update");

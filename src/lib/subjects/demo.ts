@@ -4,7 +4,7 @@ import prisma from "../../schemas/index"; // Adjust path to your Prisma client
 import findByCode from "./findByCode";
 // import { JsonValue } from "@prisma/client";
 
-export default async function addFailedRolls(data: {
+export default async function demoAddFailedRolls(data: {
     code: string;
     theoryFailedRolls?: string[];
     practicalFailedRolls?: string[];
