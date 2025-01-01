@@ -2,3 +2,16 @@ else cases :
 1. if some one passed next exam ..then what shold do ?
 2. if single exits under a single subject . what shold do for that ?
 2. if data retrived two or 3 years ? then what should to for that ?
+
+
+TODO: 1. validate all request body and id 
+TODO: 2. Authentication and validatation 
+TODO: 3. Authorization 
+TODO: 4. Implement Pagination and Links
+TODO: 5. Remove duplicate rolls under a subject
+TODO: 6. User Sevice 
+
+
+TODO: 7. demo deployment
+TODO: 8. Build the application 
+TODO: 9. deployment
