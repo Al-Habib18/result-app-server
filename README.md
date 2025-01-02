@@ -4,7 +4,7 @@ For local development:
 
 you should run this command for run postgress :
 
-`docker run --name postgres-container -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=result-db -p 5432:5432 -d postgres`
+`docker run --name postgres-container -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=result-db -p 5432:5432 postgres`
 
 or you can run postgress any otherway.
 
