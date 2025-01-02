@@ -27,7 +27,14 @@ export const updateSubjectSchema = z.object({
     practicalFailed: z.array(z.string()).optional(),
 });
 
-export const removalSchema = z.object({
+export const failedSchema = z.object({
+    theoryFailed: z.array(z.string()).optional(),
+    practicalFailed: z.array(z.string()).optional(),
+});
+
+export const subjectSchema = z.object({
+    code: z.string(),
+    name: z.string(),
     theoryFailed: z.array(z.string()).optional(),
     practicalFailed: z.array(z.string()).optional(),
 });

@@ -6,7 +6,7 @@ import badRequest from "@utils/badRequest";
 import notFound from "@utils/notFound";
 import removeFailedRolls from "@lib/subjects/removeFailedRolls";
 import findByCode from "@lib/subjects/findByCode";
-import { codeParamSchema, removalSchema } from "@schemas/zod-schema";
+import { codeParamSchema, failedSchema } from "@schemas/zod-schema";
 const removeRollsController = async (req: Request, res: Response) => {
     try {
         const { code } = req.params;
@@ -21,7 +21,7 @@ const removeRollsController = async (req: Request, res: Response) => {
         }
 
         // validate request body using Zod
-        const parsedBody = removalSchema.safeParse(req.body);
+        const parsedBody = failedSchema.safeParse(req.body);
         if (!parsedBody.success) {
             return badRequest(res, parsedBody.error.issues[0].message);
         }

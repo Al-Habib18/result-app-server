@@ -5,14 +5,23 @@ import addFailedRolls from "../../lib/subjects/addFailedRolls";
 import badRequest from "@utils/badRequest";
 import notFound from "@utils/notFound";
 import findByCode from "@lib/subjects/findByCode";
+import { codeParamSchema, failedSchema } from "@schemas/zod-schema";
 const addRollsController = async (req: Request, res: Response) => {
     try {
         const { code } = req.params;
         const { theoryFailed = [], practicalFailed = [] } = req.body;
 
-        //TODO: validate request params
+        //validate request params
+        const parsedParams = codeParamSchema.safeParse(req.params);
+        if (!parsedParams.success) {
+            return badRequest(res, parsedParams.error.issues[0].message);
+        }
 
-        //TODO: validate request body
+        // validate request body
+        const parsedBody = failedSchema.safeParse(req.body);
+        if (!parsedBody.success) {
+            return badRequest(res, parsedBody.error.issues[0].message);
+        }
 
         if (!code) return badRequest(res, "Code is required");
 
