@@ -2,65 +2,64 @@
 
 version: "3.8"
 networks:
-    result-app-net:
-        name: result-app-net
-        driver: bridge
+  result-app-net:
+    name: result-app-net
+    driver: bridge
 
 services:
-    app:
-        build:
-            context: .
-            dockerfile: Dockerfile.dev
-        image: result-app
-        container_name: result-app-container
-        # command: npx prisma migrate dev --name init && npm run dev
-        ports:
-            - "4005:4005"
-        environment:
-            - DATABASE_URL="postgresql://postgres:postgres@postgres:5432/result-db?schema=public"
-            - PORT=${PORT} || 4005
-        env_file:
-            - .env
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: result-app
+    container_name: result-app-container
+    # command: npx prisma migrate dev --name init
+    ports:
+      - "4005:4005"
+    environment:
+    - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/result-db?schema=public
+    - PORT=4005
 
-        restart: always
-        depends_on:
-            - db
-        volumes:
-            - .:/app
-        networks:
-            - result-app-net
 
-    db:
-        image: postgres:14
-        container_name: postgres
-        restart: always
-        environment:
-            POSTGRES_USER: postgres
-            POSTGRES_PASSWORD: postgres
-            POSTGRES_DB: result-db
-        volumes:
-            - postgres_data:/var/lib/postgresql/data
-        ports:
-            - "5432:5432"
-        networks:
-            - result-app-net
-        healthcheck:
-            test: ["CMD-SHELL", "pg_isready -U postgres"]
-            interval: 10s
-            timeout: 5s
-            retries: 5
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    networks:
+      - result-app-net
 
-    pgadmin:
-        image: dpage/pgadmin4
-        container_name: pgadmin
-        restart: on-failure
-        environment:
-            PGADMIN_DEFAULT_EMAIL: admin@example.com
-            PGADMIN_DEFAULT_PASSWORD: admin
-        ports:
-            - "5050:80"
-            - "5051:443"
-        networks:
-            - result-app-net
+  db:
+    image: postgres:14
+    container_name: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: result-db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - result-app-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: on-failure
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+      - "5051:443"
+    networks:
+      - result-app-net
 volumes:
-    postgres_data:
+  postgres_data:
