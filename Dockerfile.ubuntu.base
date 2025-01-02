@@ -7,17 +7,17 @@ RUN apk update && \
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY package.json yarn.lock ./
-RUN yarn install --frozen-lockfile
+COPY package.json package-lock.json ./
+RUN npm install
 
 # Copy all source code
 COPY . .
 
 # Generate Prisma Client
-# RUN npx prisma generate
+RUN npx prisma generate
 
 # Expose application port
 EXPOSE 4005
 
 # Start the application
-CMD ["yarn", "dev"]
+CMD ["npm", "run", "dev"]

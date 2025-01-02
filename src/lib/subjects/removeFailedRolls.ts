@@ -32,13 +32,23 @@ export default async function removeFailedRolls(data: {
             ? subject.practicalFailed
             : [];
 
-        const updatedTheoryFailed = existingTheoryFailed
+        //TODO: covert existingTheoryFailed and existingPracticalFailed to  arrays of string
+
+        const existingTheoryFailedString = existingTheoryFailed.map((roll) =>
+            roll?.toString()
+        );
+
+        const existingPracticalFailedString = existingPracticalFailed.map(
+            (roll) => roll?.toString()
+        );
+
+        const updatedTheoryFailed = existingTheoryFailedString
             .filter((roll): roll is string => typeof roll === "string") // Ensure rolls are strings
             .filter((roll) => !theoryFailedRolls.includes(roll));
 
         const newTheoryFailed = Array.from(new Set(updatedTheoryFailed));
 
-        const updatedPracticalFailed = existingPracticalFailed
+        const updatedPracticalFailed = existingPracticalFailedString
             .filter((roll): roll is string => typeof roll === "string") // Ensure rolls are strings
             .filter((roll) => !practicalFailedRolls.includes(roll));
 

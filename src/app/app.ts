@@ -4,10 +4,10 @@ import morgan from "morgan";
 import cors from "cors";
 import express, { Application /* , Request, Response */ } from "express";
 
-import path from "path";
-import swaggerUI from "swagger-ui-express";
+/* import path from "path";
+import swaggerUI, { SwaggerOptions } from "swagger-ui-express";
 import YML from "yamljs";
-
+ */
 import router from "@routes/index";
 
 import deleteMany from "./deleteMany";
@@ -23,10 +23,13 @@ app.use(cors());
 // use routes
 app.use(router);
 
-// SwaggerUI
-const swaggerDocs = YML.load(path.join(__dirname, "../docs", "swagger.yaml"));
+// Load the Swagger YAML file
+/* const swaggerDocs = YML.load(
+    path.join(__dirname, "../docs", "swagger.yaml")
+) as SwaggerOptions;
+// Set up Swagger UI with proper type annotations
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
-
+ */
 // Check Health
 app.get("/health", (_req, res) => {
     res.status(200).json({ message: "UP" });
