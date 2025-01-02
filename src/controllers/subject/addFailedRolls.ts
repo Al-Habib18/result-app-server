@@ -9,7 +9,11 @@ const addRollsController = async (req: Request, res: Response) => {
     try {
         const { code } = req.params;
         const { theoryFailed = [], practicalFailed = [] } = req.body;
-        //TODO: validate request params and body using Zod
+
+        //TODO: validate request params
+
+        //TODO: validate request body
+
         if (!code) return badRequest(res, "Code is required");
 
         const isExistsSubject = await findByCode(code);

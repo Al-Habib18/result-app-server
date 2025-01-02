@@ -4,10 +4,17 @@ import deleteById from "../../lib/subjects/deleteById";
 import badRequest from "@utils/badRequest";
 import notFound from "@utils/notFound";
 import findByCode from "@lib/subjects/findByCode";
+import { codeParamSchema } from "@schemas/zod-schema";
 const deleteByCodeController = async (req: Request, res: Response) => {
     try {
         const { code } = req.params;
-        //TODO: validate request body using Zod
+
+        // validate request params
+        const parsedParams = codeParamSchema.safeParse(req.params);
+        if (!parsedParams.success) {
+            return badRequest(res, parsedParams.error.issues[0].message);
+        }
+
         if (!code) return badRequest(res, "Id is required");
 
         const isExistsSubject = await findByCode(code);

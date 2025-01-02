@@ -6,12 +6,25 @@ import badRequest from "@utils/badRequest";
 import notFound from "@utils/notFound";
 import removeFailedRolls from "@lib/subjects/removeFailedRolls";
 import findByCode from "@lib/subjects/findByCode";
+import { codeParamSchema, removalSchema } from "@schemas/zod-schema";
 const removeRollsController = async (req: Request, res: Response) => {
     try {
         const { code } = req.params;
         const { theoryFailed = [], practicalFailed = [] } = req.body;
-        //TODO: validate request params and body using Zod
+
         if (!code) return badRequest(res, "Code is required");
+
+        // validate request params  using Zod
+        const parsedParams = codeParamSchema.safeParse(req.params);
+        if (!parsedParams.success) {
+            return badRequest(res, parsedParams.error.issues[0].message);
+        }
+
+        // validate request body using Zod
+        const parsedBody = removalSchema.safeParse(req.body);
+        if (!parsedBody.success) {
+            return badRequest(res, parsedBody.error.issues[0].message);
+        }
 
         const subject = await findByCode(code);
         if (!subject) return notFound(res, "Subject not found");

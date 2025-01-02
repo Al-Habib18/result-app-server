@@ -4,6 +4,7 @@ import createSubject from "../../lib/subjects/create";
 import badRequest from "@utils/badRequest";
 import findByCode from "@lib/subjects/findByCode";
 import removeDuplicateRolls from "@lib/subjects/removeDuplicates";
+import { createSubjectSchema } from "@schemas/zod-schema";
 
 const createController = async (req: Request, res: Response) => {
     try {
@@ -14,7 +15,11 @@ const createController = async (req: Request, res: Response) => {
             practicalFailed = [],
         } = req.body;
 
-        //TODO: validate request body using Zod
+        // validate request body using Zod
+        const parsedBody = createSubjectSchema.safeParse(req.body);
+        if (!parsedBody.success) {
+            return badRequest(res, parsedBody.error.issues[0].message);
+        }
 
         if (!code) return badRequest(res, "Code is required");
 

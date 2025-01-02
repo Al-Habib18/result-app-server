@@ -5,13 +5,25 @@ import findByCode from "../../lib/subjects/findByCode";
 import notFound from "@utils/notFound";
 import badRequest from "@utils/badRequest";
 import removeDuplicateRolls from "@lib/subjects/removeDuplicates";
+import { updateSubjectSchema, codeParamSchema } from "@schemas/zod-schema";
 const updateByCodeController = async (req: Request, res: Response) => {
     try {
         const { code } = req.params;
         const { name, theoryFailed, practicalFailed } = req.body;
 
-        //TODO: validate request body and  using Zod
         if (!code) return badRequest(res, "Code is required");
+
+        // validate request params using Zod
+        const parsedParams = codeParamSchema.safeParse(req.params);
+        if (!parsedParams.success) {
+            return badRequest(res, parsedParams.error.issues[0].message);
+        }
+
+        // validate request body using Zod
+        const parsedBody = updateSubjectSchema.safeParse(req.body);
+        if (!parsedBody.success) {
+            return badRequest(res, parsedBody.error.issues[0].message);
+        }
 
         const updateData = {
             ...(name && { name }),

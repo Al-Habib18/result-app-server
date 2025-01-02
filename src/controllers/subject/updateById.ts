@@ -4,14 +4,25 @@ import updateById from "../../lib/subjects/updateById";
 import findById from "../../lib/subjects/findById";
 import notFound from "../../utils/notFound";
 import badRequest from "@utils/badRequest";
+import { idParamSchema, updateSubjectSchema } from "@schemas/zod-schema";
 
 const updateByCodeController = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
         const { code, name, theoryFailed, practicalFailed } = req.body;
-
-        //TODO: validate request body and Id using Zod
         if (!id) return badRequest(res, "Id is required");
+
+        // validate request params using Zod
+        const parsedParams = idParamSchema.safeParse(req.params);
+        if (!parsedParams.success) {
+            return badRequest(res, parsedParams.error.issues[0].message);
+        }
+
+        // validate request body using Zod
+        const parsedBody = updateSubjectSchema.safeParse(req.body);
+        if (!parsedBody.success) {
+            return badRequest(res, parsedBody.error.issues[0].message);
+        }
 
         const updateData = {
             ...(code && { code }),
