@@ -32,7 +32,7 @@ export default async function removeFailedRolls(data: {
             ? subject.practicalFailed
             : [];
 
-        //TODO: covert existingTheoryFailed and existingPracticalFailed to  arrays of string
+        //covert existingTheoryFailed and existingPracticalFailed to  arrays of string
 
         const existingTheoryFailedString = existingTheoryFailed.map((roll) =>
             roll?.toString()

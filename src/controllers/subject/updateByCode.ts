@@ -4,6 +4,7 @@ import updateById from "../../lib/subjects/updateById";
 import findByCode from "../../lib/subjects/findByCode";
 import notFound from "@utils/notFound";
 import badRequest from "@utils/badRequest";
+import removeDuplicateRolls from "@lib/subjects/removeDuplicates";
 const updateByCodeController = async (req: Request, res: Response) => {
     try {
         const { code } = req.params;
@@ -26,7 +27,11 @@ const updateByCodeController = async (req: Request, res: Response) => {
 
         const id = subject.id;
 
-        const updatedSubject = await updateById(id, updateData);
+        // update subject
+        await updateById(id, updateData);
+
+        // remove duplicate rolls
+        const updatedSubject = await removeDuplicateRolls(code);
 
         return res.json({
             message: "Subject updated successfully",

@@ -30,6 +30,8 @@ const updateByCodeController = async (req: Request, res: Response) => {
 
         const updatedSubject = await updateById(id, updateData);
 
+        //TODO: remove duplicate rolls
+
         return res.json({
             message: "Subject updated successfully",
             data: updatedSubject,

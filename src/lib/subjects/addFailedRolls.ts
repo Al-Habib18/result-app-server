@@ -40,20 +40,17 @@ export default async function addFailedRolls(data: {
             new Set([...existingPracticalFailed, ...practicalFailedRolls])
         );
 
-        //TODO: Remove duplicates doesn't work properly
         // Remove duplicates
-        const uniqueTheoryFailed = Array.from(new Set(updatedTheoryFailed));
-        const uniquePracticalFailed = Array.from(
-            new Set(updatedPracticalFailed)
-        );
+        const theoryFailed = Array.from(new Set(updatedTheoryFailed));
+        const practicalFailed = Array.from(new Set(updatedPracticalFailed));
 
         // Update the subject in the database
         const updatedSubject = await prisma.subject.update({
             where: { code },
             data: {
                 ...subject,
-                theoryFailed: uniqueTheoryFailed,
-                practicalFailed: uniquePracticalFailed,
+                theoryFailed: theoryFailed,
+                practicalFailed: practicalFailed,
             },
             select: {
                 id: true,

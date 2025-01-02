@@ -7,7 +7,6 @@ else cases :
 TODO: 1. validate all request body and id 
 TODO: 2. Authentication and validatation 
 TODO: 3. Authorization 
-TODO: 4. Implement Pagination and Links
 TODO: 5. Remove duplicate rolls under a subject
 TODO: 6. User Service 
 TODO: 7. Forgot password (if a user forget pass, admin will update pass manualy)
