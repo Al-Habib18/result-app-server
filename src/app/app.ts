@@ -23,7 +23,8 @@ app.use(cors());
 // use routes
 app.use(router);
 
-// Load the Swagger YAML file
+//TODO: uncomment latter this block
+//  Load the Swagger YAML file
 /* const swaggerDocs = YML.load(
     path.join(__dirname, "../docs", "swagger.yaml")
 ) as SwaggerOptions;

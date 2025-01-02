@@ -9,7 +9,8 @@ TODO: 2. Authentication and validatation
 TODO: 3. Authorization 
 TODO: 4. Implement Pagination and Links
 TODO: 5. Remove duplicate rolls under a subject
-TODO: 6. User Sevice 
+TODO: 6. User Service 
+TODO: 7. Forgot password (if a user forget pass, admin will update pass manualy)
 
 
 TODO: 7. demo deployment
