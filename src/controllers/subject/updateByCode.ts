@@ -14,7 +14,7 @@ const updateByCodeController = async (req: Request, res: Response) => {
         if (!code) return badRequest(res, "Code is required");
 
         // validate request params using Zod
-        const parsedParams = codeParamSchema.safeParse(req.params);
+        const parsedParams = codeParamSchema.safeParse(code);
         if (!parsedParams.success) {
             return badRequest(res, parsedParams.error.issues[0].message);
         }
@@ -26,6 +26,7 @@ const updateByCodeController = async (req: Request, res: Response) => {
         }
 
         const updateData = {
+            ...(code && { code }),
             ...(name && { name }),
             ...(theoryFailed && { theoryFailed }),
             ...(practicalFailed && { practicalFailed }),
@@ -45,7 +46,7 @@ const updateByCodeController = async (req: Request, res: Response) => {
         // remove duplicate rolls
         const updatedSubject = await removeDuplicateRolls(code);
 
-        return res.json({
+        return res.status(200).json({
             message: "Subject updated successfully",
             data: updatedSubject,
         });

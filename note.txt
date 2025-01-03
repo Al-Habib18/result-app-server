@@ -7,7 +7,7 @@ else cases :
 TODO: 1. validate all request body and id 
 TODO: 2. Authentication and validatation 
 TODO: 3. Authorization 
-TODO: 4. Encrypt Passwor
+TODO: 4. Encrypt Password
 TODO: 6. User Service 
 TODO: 7. Forgot password (if a user forget pass, admin will update pass manualy)
 
@@ -15,3 +15,6 @@ TODO: 7. Forgot password (if a user forget pass, admin will update pass manualy)
 TODO: 7. demo deployment
 TODO: 8. Build the application 
 TODO: 9. deployment
+
+
+issue: 1. subject update by code... there is a problem.

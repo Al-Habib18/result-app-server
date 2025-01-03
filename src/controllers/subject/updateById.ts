@@ -13,7 +13,7 @@ const updateByCodeController = async (req: Request, res: Response) => {
         if (!id) return badRequest(res, "Id is required");
 
         // validate request params using Zod
-        const parsedParams = idParamSchema.safeParse(req.params);
+        const parsedParams = idParamSchema.safeParse(id);
         if (!parsedParams.success) {
             return badRequest(res, parsedParams.error.issues[0].message);
         }
@@ -43,7 +43,7 @@ const updateByCodeController = async (req: Request, res: Response) => {
 
         //TODO: remove duplicate rolls
 
-        return res.json({
+        return res.status(200).json({
             message: "Subject updated successfully",
             data: updatedSubject,
         });

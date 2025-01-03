@@ -12,7 +12,7 @@ const addRollsController = async (req: Request, res: Response) => {
         const { theoryFailed = [], practicalFailed = [] } = req.body;
 
         //validate request params
-        const parsedParams = codeParamSchema.safeParse(req.params);
+        const parsedParams = codeParamSchema.safeParse(code);
         if (!parsedParams.success) {
             return badRequest(res, parsedParams.error.issues[0].message);
         }
@@ -36,7 +36,7 @@ const addRollsController = async (req: Request, res: Response) => {
 
         const updatedSubject = await addFailedRolls(data);
 
-        return res.json({
+        return res.status(200).json({
             message: "Rolls added successfully",
             data: updatedSubject,
         });

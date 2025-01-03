@@ -8,14 +8,13 @@ import { codeParamSchema } from "@schemas/zod-schema";
 const deleteByCodeController = async (req: Request, res: Response) => {
     try {
         const { code } = req.params;
+        if (!code) return badRequest(res, "Id is required");
 
         // validate request params
-        const parsedParams = codeParamSchema.safeParse(req.params);
+        const parsedParams = codeParamSchema.safeParse(code);
         if (!parsedParams.success) {
             return badRequest(res, parsedParams.error.issues[0].message);
         }
-
-        if (!code) return badRequest(res, "Id is required");
 
         const isExistsSubject = await findByCode(code);
         if (!isExistsSubject) return notFound(res, "Subject not found");
@@ -25,7 +24,7 @@ const deleteByCodeController = async (req: Request, res: Response) => {
         const subject = await deleteById(id);
         if (!subject) return notFound(res, "Subject not found");
 
-        return res.json({
+        return res.status(204).json({
             message: "Subject deleted successfully",
             data: subject,
         });

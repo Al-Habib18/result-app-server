@@ -7,7 +7,9 @@ export const idParamSchema = z.string();
 
 export const rollNumberParamSchema = z.string();
 
-export const codeParamSchema = z.string();
+export const codeParamSchema = z
+    .string()
+    .regex(/^\+?[0-9]\d{1,14}$/, "Invalid Code");
 
 export const queryParamsSchema = z.object({
     limit: z.number().positive().max(50).optional(),
@@ -15,14 +17,17 @@ export const queryParamsSchema = z.object({
 });
 
 export const createSubjectSchema = z.object({
-    code: z.string(),
-    name: z.string(),
+    code: z.string().regex(/^\+?[0-9]\d{1,14}$/, "Invalid Code"),
+    name: z.string().optional(),
     theoryFailed: z.array(z.string()).optional(),
     practicalFailed: z.array(z.string()).optional(),
 });
 
 export const updateSubjectSchema = z.object({
-    code: z.string().optional(),
+    code: z
+        .string()
+        .regex(/^\+?[0-9]\d{1,14}$/, "Invalid Subject Code")
+        .optional(),
     name: z.string().optional(),
     theoryFailed: z.array(z.string()).optional(),
     practicalFailed: z.array(z.string()).optional(),

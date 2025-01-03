@@ -16,7 +16,13 @@ const createController = async (req: Request, res: Response) => {
         } = req.body;
 
         // validate request body using Zod
-        const parsedBody = createSubjectSchema.safeParse(req.body);
+        const parsedBody = await createSubjectSchema.safeParse({
+            code,
+            name,
+            theoryFailed,
+            practicalFailed,
+        });
+
         if (!parsedBody.success) {
             return badRequest(res, parsedBody.error.issues[0].message);
         }
@@ -38,7 +44,7 @@ const createController = async (req: Request, res: Response) => {
         //  remove dupliate rolls
         const subject = await removeDuplicateRolls(code);
 
-        return res.status(200).json({
+        return res.status(201).json({
             message: "Subject Created successful",
             data: subject,
         });

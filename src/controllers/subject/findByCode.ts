@@ -11,7 +11,7 @@ const findByCodeController = async (req: Request, res: Response) => {
         const { code } = req.params;
 
         // validate code using Zod
-        const parsedParams = codeParamSchema.safeParse(req.params);
+        const parsedParams = codeParamSchema.safeParse(code);
         if (!parsedParams.success) {
             return badRequest(res, parsedParams.error.issues[0].message);
         }
@@ -21,7 +21,7 @@ const findByCodeController = async (req: Request, res: Response) => {
         const subject = await findByCode(code);
         if (!subject) return notFound(res, "Subject not found");
 
-        return res.json({
+        return res.status(200).json({
             message: "Subject retrived successfully",
             data: subject,
         });
