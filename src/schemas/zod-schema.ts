@@ -43,7 +43,7 @@ export const subjectSchema = z.object({
 export const createUserSchema = z.object({
     name: z.string().min(1, "Name is required").max(100, "Name is too long"),
     email: z.string().email("Invalid email address"),
-    phone: z.string().regex(/^\+?[1-9]\d{1,14}$/, "Invalid phone number"),
+    phone: z.string().regex(/^\+?[0-9]\d{1,14}$/, "Invalid phone number"),
     password: z
         .string()
         .min(8, "Password must be at least 8 characters long")
@@ -51,4 +51,27 @@ export const createUserSchema = z.object({
     role: z.enum([Role.USER, Role.ADMIN]).optional(),
     verified: z.boolean().optional(),
     status: z.enum(["PENDING", "ACTIVE", "SUSPENDED"]).optional(),
+});
+
+export const updateUserSchema = z.object({
+    name: z
+        .string()
+        .min(1, "Name is required")
+        .max(100, "Name is too long")
+        .optional(),
+    email: z.string().email("Invalid email address").optional(),
+    phone: z
+        .string()
+        .regex(/^\+?[0-9]\d{1,14}$/, "Invalid phone number")
+        .optional(),
+});
+
+export const userRegisterSchema = z.object({
+    name: z.string().min(1, "Name is required").max(100, "Name is too long"),
+    email: z.string().email("Invalid email address"),
+    phone: z.string().regex(/^\+?[0-9]\d{1,14}$/, "Invalid phone number"),
+    password: z
+        .string()
+        .min(8, "Password must be at least 8 characters long")
+        .max(128, "Password is too long"),
 });

@@ -3,9 +3,9 @@
 import prisma from "../../schemas/index";
 
 export default async function deleteById(id: string) {
-    const subject = await prisma.user.delete({
-        where: { id: id },
+    const user = await prisma.user.delete({
+        where: { id },
     });
 
-    return subject;
+    return user;
 }
