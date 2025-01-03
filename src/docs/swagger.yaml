@@ -17,10 +17,522 @@ tags:
       description: subjects operations
     - name: upload
       description: upload operations
-    - name: rolls
-      description: rolls operations (add or remove failed rolls)
+    - name: users
+      description: users operations
+    - name: auth
+      description: auth operations
 
 paths:
+    # Users
+    /users:
+        post:
+            tags: [users]
+            description: create a new user
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    example: Al-Habib
+                                email:
+                                    type: string
+                                    example: 0dIyK@example.com
+                                phone:
+                                    type: string
+                                    example: 123456789
+                                password:
+                                    type: string
+                                    example: password
+                                role:
+                                    type: string
+                                    enum: [ADMIN, USER]
+                                    example: USER
+
+                            required: [name, email, phone, password]
+
+            responses:
+                "201":
+                    description: User Created successfully
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: User Created successfully
+                                    data:
+                                        $ref: "#/components/schemas/User"
+
+                "400":
+                    $ref: "#/components/responses/400"
+
+                "500":
+                    $ref: "#/components/responses/500"
+        get:
+            tags: [users]
+            description: Retrive a list of users
+            parameters:
+                - $ref: "#/components/parameters/pageParam"
+                - $ref: "#/components/parameters/limitParam"
+            responses:
+                "200":
+                    description: Users retrive  successful
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: A List of Users Retrived successfully
+                                    data:
+                                        type: array
+                                        items:
+                                            $ref: "#/components/schemas/User"
+
+                "400":
+                    $ref: "#/components/responses/400"
+
+                "500":
+                    $ref: "#/components/responses/500"
+
+    /users/{id}:
+        get:
+            tags: [users]
+            description: Retrive a single user by id
+            parameters:
+                - $ref: "#/components/parameters/idPathParam"
+            responses:
+                "200":
+                    description: User retrive  successful
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: User retrive  successful
+                                    data:
+                                        $ref: "#/components/schemas/User"
+
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+        put:
+            tags: [users]
+            description: update a user
+            parameters:
+                - $ref: "#/components/parameters/idPathParam"
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    example: Al-Habib
+                                email:
+                                    type: string
+                                    example: 0dIyK@example.com
+                                phone:
+                                    type: string
+                                    example: 123456789
+
+            responses:
+                "200":
+                    description: User updated successfully
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: User updated successfully
+                                    data:
+                                        $ref: "#/components/schemas/User"
+
+                "400":
+                    $ref: "#/components/responses/400"
+
+                "401":
+                    $ref: "#/components/responses/401"
+
+                "404":
+                    $ref: "#/components/responses/404"
+
+                "500":
+                    $ref: "#/components/responses/500"
+        delete:
+            tags: [users]
+            description: delete a user
+            parameters:
+                - $ref: "#/components/parameters/idPathParam"
+            responses:
+                "204":
+                    description: User deleted successfully
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: User deleted successfully
+
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+    /users/update/{id}:
+        put:
+            tags: [users]
+            description: update a user
+            parameters:
+                - $ref: "#/components/parameters/idPathParam"
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    example: Al-Habib
+                                email:
+                                    type: string
+                                    example: 0dIyK@example.com
+                                phone:
+                                    type: string
+                                    example: 123456789
+                                role:
+                                    type: string
+                                    enum: [ADMIN, USER]
+                                    example: ADMIN
+                                verified:
+                                    type: boolean
+                                    example: true
+                                status:
+                                    type: string
+                                    enum: [ACTIVE, INACTIVE, SUSPENDED]
+                                    example: ACTIVE
+
+            responses:
+                "200":
+                    description: User updated successfully
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: User updated successfully
+                                    data:
+                                        $ref: "#/components/schemas/User"
+
+                "400":
+                    $ref: "#/components/responses/400"
+
+                "401":
+                    $ref: "#/components/responses/401"
+
+                "404":
+                    $ref: "#/components/responses/404"
+
+                "500":
+                    $ref: "#/components/responses/500"
+
+    /users/change-password/{id}:
+        put:
+            tags: [users]
+            description: change password
+            parameters:
+                - $ref: "#/components/parameters/idPathParam"
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            type: object
+                            properties:
+                                password:
+                                    type: string
+                                    example: password
+            responses:
+                "200":
+                    description: Password changed successfully
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: Password changed successfully
+
+                "400":
+                    $ref: "#/components/responses/400"
+
+                "401":
+                    $ref: "#/components/responses/401"
+
+                "404":
+                    $ref: "#/components/responses/404"
+
+                "500":
+                    $ref: "#/components/responses/500"
+
+    /users/search/email/{email}:
+        get:
+            tags: [users]
+            description: Retrive a single user by email
+            parameters:
+                - $ref: "#/components/parameters/emailPathParam"
+            responses:
+                "200":
+                    description: User retrive  successful
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: User retrive  successful
+                                    data:
+                                        $ref: "#/components/schemas/User"
+
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+    /users/search/phone/{phone}:
+        get:
+            tags: [users]
+            description: Retrive a single user by phone
+            parameters:
+                - $ref: "#/components/parameters/phonePathParam"
+            responses:
+                "200":
+                    description: User retrive  successful
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: User retrive  successful
+                                    data:
+                                        $ref: "#/components/schemas/User"
+
+                "400":
+                    $ref: "#/components/responses/400"
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+    # Auth Routes
+    /auth/register:
+        post:
+            description: Create a new account
+            tags: [Auth]
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                name:
+                                    type: string
+                                    example: Al-habib
+                                email:
+                                    type: string
+                                    example: alhabib@gmail.com
+                                password:
+                                    type: string
+                                    format: password
+                                    example: pass123
+                                phone:
+                                    type: string
+                                    example: 01313306149
+                                role:
+                                    type: string
+                                    enum: [ADMIN, USER]
+                                    default: USER
+
+            responses:
+                201:
+                    description: Registration successfull
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: Signup successfull
+                                    data:
+                                        type: object
+                                        properties:
+                                            access_token:
+                                                type: string
+                                                example: adkljklsdfddfsfsdf
+                                    links:
+                                        type: object
+                                        properties:
+                                            login:
+                                                type: string
+                                                example: /auth/login
+
+                400:
+                    $ref: "#/components/responses/400"
+                "500":
+                    $ref: "#/components/responses/500"
+    /auth/login:
+        post:
+            description: Login to your account
+            tags: [Auth]
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                email:
+                                    type: string
+                                    format: email
+                                    example: alhabib@gmail.com
+                                password:
+                                    type: string
+                                    format: password
+                                    example: pass123
+                            required: [email, password]
+            responses:
+                "200":
+                    description: Singup succefull
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    code:
+                                        type: integer
+                                        format: int 32
+                                        example: 200
+                                    message:
+                                        type: string
+                                        example: login successfull
+                                    data:
+                                        type: object
+                                        properties:
+                                            access_token:
+                                                type: string
+                                                example: sdfasdxasdfersdf
+                                    links:
+                                        type: object
+                                        properties:
+                                            self:
+                                                type: string
+                                                example: "/auth/singin"
+                "400":
+                    $ref: "#/components/responses/400"
+                "500":
+                    $ref: "#/components/responses/500"
+    /auth/refresh:
+        post:
+            description: Login to your account
+            tags: [Auth]
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                refresh_token:
+                                    type: string
+                                    example: sdf@1212#@@f429&93sdf32r
+            responses:
+                "200":
+                    description: login succefull
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    code:
+                                        type: integer
+                                        format: int 32
+                                        example: 200
+                                    message:
+                                        type: string
+                                        example: login successfull
+                                    data:
+                                        type: object
+                                        properties:
+                                            access_token:
+                                                type: string
+                                                example: sdf!as$3dx%as$dfersdfsdf
+                                            refresh_token:
+                                                type: string
+                                                example: 2rfdslfk3f$#@#sdf!sdfsd$
+                                    links:
+                                        type: object
+                                        properties:
+                                            self:
+                                                type: string
+                                                example: "/auth/singin"
+                "400":
+                    $ref: "#/components/responses/400"
+                "500":
+                    $ref: "#/components/responses/500"
+    /auth/logout:
+        post:
+            description: Logout from your account
+            tags: [Auth]
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                refresh_token:
+                                    type: string
+                                    example: sd$f3#d@2sd#@f429&93sdf32r
+
+            responses:
+                "200":
+                    description: logout successful
+                "401":
+                    $ref: "#/components/responses/401"
+                "404":
+                    $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+
+    # Subjects
+
     /subjects:
         post:
             tags: [subjects]
@@ -523,6 +1035,7 @@ paths:
                     $ref: "#/components/responses/404"
                 "500":
                     $ref: "#/components/responses/500"
+
 components:
     schemas:
         Subject:
@@ -549,6 +1062,43 @@ components:
                 updatedAt:
                     type: string
                     format: date-time
+        User:
+            type: object
+            properties:
+                id:
+                    type: string
+                    example: ksf12kdfh23kd23
+                name:
+                    type: string
+                    example: Al-Habib
+                email:
+                    type: string
+                    example: 0dIyK@example.com
+                phone:
+                    type: string
+                    example: 123456789
+                role:
+                    type: string
+                    enum: [ADMIN, USER]
+                    example: USER
+
+                verified:
+                    type: boolean
+                    example: true
+                status:
+                    type: string
+                    enum:
+                        - ACTIVE
+                        - INACTIVE
+                        - SUSPENDED
+                    example: ACTIVE
+                createdAt:
+                    type: string
+                    format: date-time
+                updatedAt:
+                    type: string
+                    format: date-time
+
         Timestamp:
             type: object
             properties:
@@ -706,3 +1256,19 @@ components:
             schema:
                 type: string
                 example: Python programming
+        emailPathParam:
+            in: path
+            name: email
+            required: true
+            description: item email
+            schema:
+                type: string
+                example: 0dIyK@example.com
+        phonePathParam:
+            in: path
+            name: phone
+            required: true
+            description: item phone
+            schema:
+                type: string
+                example: 01890023456

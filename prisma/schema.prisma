@@ -26,3 +26,28 @@ model Subject {
 }
 
 
+
+  enum Role {
+    ADMIN
+    USER
+  }
+  
+  enum AccountStatus {
+    PENDING
+    ACTIVE
+    INACTIVE
+    SUSPENDED
+  }
+  model User{
+    id                String             @id @default(cuid())
+    name              String
+    email             String             @unique
+    phone             String             @unique
+    password          String
+    role              Role               @default(USER)
+    verified          Boolean            @default(false)
+    status            AccountStatus      @default(PENDING)
+    createdAt         DateTime           @default(now())
+    updatedAt         DateTime           @updatedAt
+  }
+
