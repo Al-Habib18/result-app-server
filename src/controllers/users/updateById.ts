@@ -5,6 +5,8 @@ import { updateById } from "@lib/users";
 import badRequest from "@utils/badRequest";
 import notFound from "@utils/notFound";
 import { idParamSchema, updateUserSchema } from "@schemas/zod-schema";
+import findByEmail from "@lib/users/findByEmail";
+import findByPhone from "@lib/users/findByPhone";
 
 const userUpdateByIdController = async (req: Request, res: Response) => {
     try {
@@ -26,7 +28,12 @@ const userUpdateByIdController = async (req: Request, res: Response) => {
         if (Object.keys(req.body).length === 0)
             return badRequest(res, "No data to update");
 
-        //TODO: check duplication of email and phone
+        // check duplication of email and phone
+        const isExistsEmail = await findByEmail(req.body.email);
+        if (isExistsEmail) return badRequest(res, "Email already exists");
+
+        const isExistsPhone = await findByPhone(req.body.phone);
+        if (isExistsPhone) return badRequest(res, "Phone already exists");
 
         const user = await updateById(id, req.body);
         if (!user) return notFound(res, "User not found");

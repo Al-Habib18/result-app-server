@@ -37,7 +37,7 @@ const userFindAllController = async (req: Request, res: Response) => {
             hasPrev: !!pagination.prev,
             page: defaultPage,
         });
-        return res.json({
+        return res.status(200).json({
             message: "Subjects retrived successfully",
             data: subjects,
             pagination,

@@ -1,7 +1,7 @@
 /** @format */
 
 import { Request, Response } from "express";
-import { deleteById } from "../../lib/users";
+import { deleteById, findById } from "../../lib/users";
 import badRequest from "../../utils/badRequest";
 import notFound from "../../utils/notFound";
 import { idParamSchema } from "../../schemas/zod-schema";
@@ -16,13 +16,15 @@ const userDeleteByIdController = async (req: Request, res: Response) => {
         }
         if (!id) return badRequest(res, "Id is required");
 
-        const user = await deleteById(id);
+        const user = await findById(id);
         if (!user) return notFound(res, "User not found");
+
+        console.log("id: ", id);
 
         // delete user
         await deleteById(id);
 
-        return res.json({
+        return res.status(204).json({
             message: "User deleted successfully",
         });
     } catch (error) {

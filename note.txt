@@ -7,6 +7,7 @@ else cases :
 TODO: 1. validate all request body and id 
 TODO: 2. Authentication and validatation 
 TODO: 3. Authorization 
+TODO: 4. Encrypt Passwor
 TODO: 6. User Service 
 TODO: 7. Forgot password (if a user forget pass, admin will update pass manualy)
 

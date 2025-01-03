@@ -19,7 +19,7 @@ const userFindByIdController = async (req: Request, res: Response) => {
         const user = await findById(id);
         if (!user) return notFound(res, "User not found");
 
-        return res.json({
+        return res.status(200).json({
             message: "User retrived Successfully",
             data: user,
         });
