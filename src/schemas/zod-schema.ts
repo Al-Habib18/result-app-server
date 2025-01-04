@@ -80,6 +80,22 @@ export const updateUserSchema = z.object({
         .optional(),
 });
 
+export const updateUserAllDataSchema = z.object({
+    name: z
+        .string()
+        .min(1, "Name is required")
+        .max(100, "Name is too long")
+        .optional(),
+    email: z.string().email("Invalid email address").optional(),
+    phone: z
+        .string()
+        .regex(/^\+?[0-9]\d{1,14}$/, "Invalid phone number")
+        .optional(),
+    role: z.enum([Role.USER, Role.ADMIN]).optional(),
+    verified: z.boolean().optional(),
+    status: z.enum(["PENDING", "ACTIVE", "SUSPENDED"]).optional(),
+});
+
 export const userRegisterSchema = z.object({
     name: z.string().min(1, "Name is required").max(100, "Name is too long"),
     email: z.string().email("Invalid email address"),

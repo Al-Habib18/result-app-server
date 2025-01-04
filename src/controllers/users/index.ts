@@ -7,6 +7,7 @@ import userUpdateByIdController from "./updateById";
 import userDeleteByIdController from "./deleteById";
 import findUserByEmailController from "./findUserByEmail";
 import findUserByPhoneController from "./findUserByPhone";
+import userUpdateAllDataController from "./updateAllData";
 
 export {
     userCreateController,
@@ -16,4 +17,5 @@ export {
     userDeleteByIdController,
     findUserByEmailController,
     findUserByPhoneController,
+    userUpdateAllDataController,
 };

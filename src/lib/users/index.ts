@@ -6,6 +6,7 @@ import findAll from "./findAll";
 import updateById from "./updateById";
 import deleteById from "./deleteById";
 import countTotalUser from "./countTotal";
+import updateAllDataById from "./updateAllDatabyId";
 
 export {
     createUser,
@@ -14,4 +15,5 @@ export {
     updateById,
     deleteById,
     countTotalUser,
+    updateAllDataById,
 };
