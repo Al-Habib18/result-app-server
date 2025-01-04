@@ -4,7 +4,10 @@ const router = require("express").Router();
 import subjectRoutes from "@routes/subjectRoutes";
 import userRoutes from "@routes/userRoutes";
 import uploadRoutes from "@routes/uploadRoutes";
+import authRoutes from "@routes/authRoutes";
 import upload from "@middlewares/multer";
+
+router.use("/api/v1/auth", authRoutes);
 
 router.use("/api/v1/subjects", subjectRoutes);
 

@@ -478,13 +478,16 @@ paths:
                                         properties:
                                             access_token:
                                                 type: string
-                                                example: sdfasdxasdfersdf
+                                                example: sdfasdxasdfer434sdfsdfsd123fsdfsdfs123dfafwerwergre312
+                                            refresh_token:
+                                                type: string
+                                                example: sdfasdxasdfer434sdfsdfsd123fsdfsdfs123dfafwerwergre312
                                     links:
                                         type: object
                                         properties:
                                             self:
                                                 type: string
-                                                example: "/auth/singin"
+                                                example: "/auth/login"
                 "400":
                     $ref: "#/components/responses/400"
                 "500":
