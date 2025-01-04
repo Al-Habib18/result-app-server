@@ -1,7 +1,7 @@
 /** @format */
 
 // delete refresh token
-/* import jwt from "jsonwebtoken";
+
 import getRefresh from "./find";
 import prisma from "@schemas/index";
 
@@ -26,4 +26,3 @@ const deleteRefresh = async (token: string) => {
 };
 
 export default deleteRefresh;
- */

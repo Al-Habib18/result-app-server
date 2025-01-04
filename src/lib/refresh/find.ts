@@ -1,6 +1,5 @@
 /** @format */
 
-/* import jwt from "jsonwebtoken";
 import prisma from "@schemas/index";
 
 const getRefresh = async (token: string) => {
@@ -13,4 +12,3 @@ const getRefresh = async (token: string) => {
 };
 
 export default getRefresh;
- */

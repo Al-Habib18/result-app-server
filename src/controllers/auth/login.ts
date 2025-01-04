@@ -8,7 +8,7 @@ import findByEmail from "@lib/users/findByEmail";
 // import { AccountStatus } from "@prisma/client";
 // import { hasMatched } from "@utils/index";
 import badRequest from "@utils/badRequest";
-import { createRefresh } from "@lib/refresh";
+import createRefresh from "../../lib/refresh/create";
 
 const loginController = async (req: Request, res: Response) => {
     try {

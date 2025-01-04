@@ -114,3 +114,7 @@ export const loginSchema = z.object({
         .min(4, "Password must be at least 8 characters long")
         .max(16, "Password is too long"),
 });
+
+export const refreshTokenSchema = z.object({
+    refreshToken: z.string(),
+});
