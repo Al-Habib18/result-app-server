@@ -6,6 +6,7 @@ import { createUserSchema } from "@schemas/zod-schema";
 import badRequest from "@utils/badRequest";
 import findByEmail from "@lib/users/findByEmail";
 import findByPhone from "@lib/users/findByPhone";
+import { hashPassword } from "@utils/password";
 const userCreateController = async (req: Request, res: Response) => {
     try {
         const { name, email, phone, password, role } = req.body;
@@ -25,9 +26,17 @@ const userCreateController = async (req: Request, res: Response) => {
         const isExistsPhone = await findByPhone(phone);
         if (isExistsPhone) return badRequest(res, "Phone already exists");
 
-        //TODO: encrypt password
+        // encrypt password
+        const pass = password as string;
+        const hashedPassword = await hashPassword(pass);
 
-        const user = await userCreate({ name, email, phone, password, role });
+        const user = await userCreate({
+            name,
+            email,
+            phone,
+            password: hashedPassword,
+            role,
+        });
         return res
             .status(201)
             .json({ message: "User created successfully", data: user });

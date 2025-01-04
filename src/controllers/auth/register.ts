@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 import userCreate from "@lib/users/create";
 import findByEmail from "@lib/users/findByEmail";
 import findByPhone from "@lib/users/findByPhone";
-// import { hashPassword } from "@utils/password";
+import { hashPassword } from "@utils/password";
 import { Role } from "@prisma/client";
 import { userRegisterSchema } from "@schemas/zod-schema";
 import badRequest from "@utils/badRequest";
@@ -32,17 +32,15 @@ const registerController = async (req: Request, res: Response) => {
         const isExistsPhone = await findByPhone(phone);
         if (isExistsPhone) return badRequest(res, "Phone already exists");
 
-        // TODO: hash password
-        /*         const pass = password as string;
+        // T hash password
+        const pass = password as string;
         const hashedPassword = await hashPassword(pass);
-        console.log("hashedPassword: ", hashedPassword); */
-
         // create a new user
         const user = await userCreate({
             name,
             email,
             phone,
-            password: password,
+            password: hashedPassword,
             role: Role.USER,
         });
 
