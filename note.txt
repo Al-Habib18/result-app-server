@@ -4,17 +4,17 @@ else cases :
 2. if data retrived two or 3 years ? then what should to for that ?
 
 
-TODO: 1. validate all request body and id 
-TODO: 2. Authentication and validatation 
-TODO: 3. Authorization 
-TODO: 4. Encrypt Password
-TODO: 6. User Service 
-TODO: 7. Forgot password (if a user forget pass, admin will update pass manualy)
+TODO:  Authentication 
+TODO:  Authorization 
+TODO:  slove issue for serving docs
+TODO:  Forgot password (if a user forget pass, admin will update pass manualy)
+
+TODO: add status(accountStatus) query params for find all users
 
 
-TODO: 7. demo deployment
-TODO: 8. Build the application 
-TODO: 9. deployment
+TODO:  demo deployment
+TODO:  Build the application 
+TODO:  deployment
 
 
 issue: 1. subject update by code... there is a problem.

@@ -78,6 +78,7 @@ paths:
             parameters:
                 - $ref: "#/components/parameters/pageParam"
                 - $ref: "#/components/parameters/limitParam"
+                - $ref: "#/components/parameters/statusParam"
             responses:
                 "200":
                     description: Users retrive  successful
@@ -1264,6 +1265,14 @@ components:
                 type: integer
                 format: int32
                 example: 10
+        statusParam:
+            in: query
+            name: status
+            description: item status
+            schema:
+                type: string
+                enum: [ACTIVE, INACTIVE, SUSPENDED]
+                example: ACTIVE
         idPathParam:
             in: path
             name: id

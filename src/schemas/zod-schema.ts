@@ -16,6 +16,7 @@ export const codeParamSchema = z
 export const queryParamsSchema = z.object({
     limit: z.number().positive().max(50).optional(),
     page: z.number().positive().min(1).optional(),
+    status: z.enum(["PENDING", "ACTIVE", "SUSPENDED"]).optional(),
 });
 
 export const createSubjectSchema = z.object({
@@ -117,4 +118,8 @@ export const loginSchema = z.object({
 
 export const refreshTokenSchema = z.object({
     refreshToken: z.string(),
+});
+
+export const accessTokenSchema = z.object({
+    accessToken: z.string(),
 });

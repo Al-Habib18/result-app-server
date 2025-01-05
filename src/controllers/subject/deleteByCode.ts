@@ -26,7 +26,6 @@ const deleteByCodeController = async (req: Request, res: Response) => {
 
         return res.status(204).json({
             message: "Subject deleted successfully",
-            data: subject,
         });
     } catch (error) {
         console.log(error);
