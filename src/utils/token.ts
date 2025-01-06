@@ -15,7 +15,7 @@ export const getAccessToken = (data: {
             role: data.role,
         },
         process.env.JWT_SECRET ?? "My_Secret_Key",
-        { expiresIn: "1h" }
+        { expiresIn: process.env.JWT_EXPIRES_IN ?? "24h" }
     );
     return accessToken;
 };

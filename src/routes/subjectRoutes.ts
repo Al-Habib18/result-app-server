@@ -1,34 +1,33 @@
 /** @format */
 
+import authenticate from "@middlewares/authenticate";
 const router = require("express").Router();
 import {
     createController,
     findAllController,
     findByCodeController,
-    findByNameController,
+    // findByNameController,deleteByCodeController,    updateByCodeController,
     findByIdController,
-    deleteByCodeController,
     deleteByIdController,
     updateByIdController,
-    updateByCodeController,
     addRollsController,
     removeRollsController,
 } from "@controllers/subject/index";
 
-router.post("/", createController);
-router.get("/", findAllController);
+router.post("/", authenticate, createController);
+router.get("/", authenticate, findAllController);
 
-router.get("/search/codes/:code", findByCodeController);
-router.get("/search/names/:name", findByNameController);
+router.get("/search/codes/:code", authenticate, findByCodeController);
+// router.get("/search/names/:name", authenticate, findByNameController);
 
-router.put("/:id", updateByIdController);
-router.put("/update/codes/:code", updateByCodeController);
+router.put("/:id", authenticate, updateByIdController);
+// router.put("/update/codes/:code", authenticate, updateByCodeController);
 
-router.get("/:id", findByIdController);
-router.delete("/:id", deleteByIdController);
-router.delete("/delete/:code", deleteByCodeController);
+router.get("/:id", authenticate, findByIdController);
+router.delete("/:id", authenticate, deleteByIdController);
+// router.delete("/delete/:code", authenticate, deleteByCodeController);
 
-router.put("/:code/add-rolls", addRollsController);
-router.put("/:code/remove-rolls", removeRollsController);
+router.put("/:code/add-rolls", authenticate, addRollsController);
+router.put("/:code/remove-rolls", authenticate, removeRollsController);
 
 export default router;

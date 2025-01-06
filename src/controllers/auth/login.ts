@@ -6,7 +6,8 @@ import { Response, Request } from "express";
 import { loginSchema } from "@schemas/zod-schema";
 import findByEmail from "@lib/users/findByEmail";
 // import { AccountStatus } from "@prisma/client";
-// import { hasMatched } from "@utils/index";
+import { comparePasswords } from "@utils/password";
+import { getAccessToken } from "@utils/token";
 import badRequest from "@utils/badRequest";
 import createRefresh from "../../lib/refresh/create";
 
@@ -22,12 +23,16 @@ const loginController = async (req: Request, res: Response) => {
         const user = await findByEmail(parsedBody.data.email);
         if (!user) return badRequest(res, "Invalid credentials");
 
-        //TODO: compare password
-        /*         const isMatch = hasMatched(parsedBody.data.password, user.password);
+        // compare password
+
+        const isMatch = comparePasswords(
+            parsedBody.data.password,
+            user.password
+        );
 
         if (!isMatch) {
             return badRequest(res, "Invalid credentials");
-        } else if (!user.verified) {
+        } /*TODO: else if (!user.verified) {
             // check user is verified
             return badRequest(res, "User not verified");
         } else if (user.status !== AccountStatus.ACTIVE) {
@@ -42,10 +47,20 @@ const loginController = async (req: Request, res: Response) => {
             name: user.name,
             role: user.role,
         });
+        //generate access token
+        const accessToken = getAccessToken({
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+        });
+        /*         // delete old refresh token
+        await deleteRefresh(user.id); */
 
         return res.status(200).json({
             message: "Login successful",
             refreshToken,
+            accessToken: accessToken,
         });
     } catch (error) {
         console.log("error :: ", error);

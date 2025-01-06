@@ -26,8 +26,10 @@ app.use(cors());
 app.use(router);
 
 //TODO: Load the Swagger YAML file
-// const swaggerDocs = YML.load(path.join(__dirname, "../docs", "swagger.yaml"));
-// app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
+/* const swaggerDocs = YML.load(
+    path.join(__dirname, "../docs", "swagger.yaml")
+) as SwaggerOptions;
+app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs)); */
 
 // Check Health
 app.get("/health", (_req, res) => {

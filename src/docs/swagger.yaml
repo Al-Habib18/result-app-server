@@ -13,14 +13,15 @@ servers:
       url: http://localhost:4005/api/v1
 
 tags:
+    - name: Auth
+      description: auth operations
+    - name: users
+      description: users operations
+
     - name: subjects
       description: subjects operations
     - name: upload
       description: upload operations
-    - name: users
-      description: users operations
-    - name: Auth
-      description: auth operations
 
 paths:
     # Users
@@ -28,6 +29,10 @@ paths:
         post:
             tags: [users]
             description: create a new user
+            summary: create a new user
+            security:
+                - bearerAuth: []
+
             requestBody:
                 content:
                     "application/json":
@@ -74,7 +79,10 @@ paths:
                     $ref: "#/components/responses/500"
         get:
             tags: [users]
+            security:
+                - bearerAuth: []
             description: Retrive a list of users
+            summary: Retrive a list of users
             parameters:
                 - $ref: "#/components/parameters/pageParam"
                 - $ref: "#/components/parameters/limitParam"
@@ -104,6 +112,9 @@ paths:
     /users/{id}:
         get:
             tags: [users]
+            security:
+                - bearerAuth: []
+            summary: Retrive a single user by id
             description: Retrive a single user by id
             parameters:
                 - $ref: "#/components/parameters/idPathParam"
@@ -131,6 +142,9 @@ paths:
                     $ref: "#/components/responses/500"
         put:
             tags: [users]
+            security:
+                - bearerAuth: []
+            summary: update a user by id
             description: update a user
             parameters:
                 - $ref: "#/components/parameters/idPathParam"
@@ -177,6 +191,9 @@ paths:
                     $ref: "#/components/responses/500"
         delete:
             tags: [users]
+            security:
+                - bearerAuth: []
+            summary: delete a user by id
             description: delete a user
             parameters:
                 - $ref: "#/components/parameters/idPathParam"
@@ -203,7 +220,10 @@ paths:
     /users/update/{id}:
         put:
             tags: [users]
-            description: update a user
+            description: update a user by id without password
+            security:
+                - bearerAuth: []
+            summary: update a user by id without password
             parameters:
                 - $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -263,6 +283,9 @@ paths:
         put:
             tags: [users]
             description: change password
+            security:
+                - bearerAuth: []
+            summary: change password
             parameters:
                 - $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -301,6 +324,9 @@ paths:
         put:
             tags: [users]
             description: forget password
+            security:
+                - bearerAuth: []
+            summary: forget password
             parameters:
                 - $ref: "#/components/parameters/idPathParam"
             responses:
@@ -330,6 +356,9 @@ paths:
     /users/search/email/{email}:
         get:
             tags: [users]
+            security:
+                - bearerAuth: []
+            summary: Retrive a single user by email
             description: Retrive a single user by email
             parameters:
                 - $ref: "#/components/parameters/emailPathParam"
@@ -358,6 +387,9 @@ paths:
     /users/search/phone/{phone}:
         get:
             tags: [users]
+            security:
+                - bearerAuth: []
+            summary: Retrive a single user by phone
             description: Retrive a single user by phone
             parameters:
                 - $ref: "#/components/parameters/phonePathParam"
@@ -570,6 +602,10 @@ paths:
         post:
             tags: [subjects]
             description: create a new subjects
+            summary: create a new subjects
+            security:
+                - bearerAuth: []
+
             requestBody:
                 content:
                     "application/json":
@@ -632,7 +668,11 @@ paths:
                     $ref: "#/components/responses/500"
         get:
             description: Retrive a list of Subjects
+            summary: Retrive a list of Subjects
             tags: [subjects]
+            security:
+                - bearerAuth: []
+
             parameters:
                 - $ref: "#/components/parameters/pageParam"
                 - $ref: "#/components/parameters/limitParam"
@@ -713,6 +753,9 @@ paths:
     /subjects/{id}:
         get:
             tags: [subjects]
+            security:
+                - bearerAuth: []
+            summary: Retrive a Subject by id
             description: Retrive a single Subject by id
             parameters:
                 - $ref: "#/components/parameters/idPathParam"
@@ -740,7 +783,10 @@ paths:
                     $ref: "#/components/responses/500"
         put:
             tags: [subjects]
+            security:
+                - bearerAuth: []
             description: Update a Subject By id
+            summary: Update a Subject By id
             parameters:
                 - $ref: "#/components/parameters/idPathParam"
             requestBody:
@@ -785,7 +831,10 @@ paths:
                     $ref: "#/components/responses/500"
         delete:
             tags: [subjects]
+            security:
+                - bearerAuth: []
             description: Delete a Subject By id
+            summary: Delete a Subject By id
             parameters:
                 - $ref: "#/components/parameters/idPathParam"
             responses:
@@ -802,6 +851,11 @@ paths:
     /subjects/search/codes/{code}:
         get:
             tags: [subjects]
+            description: Retrive a single Subject by code
+            summary: Retrive a Subject by code
+            security:
+                - bearerAuth: []
+
             parameters:
                 - $ref: "#/components/parameters/codePathParam"
             responses:
@@ -826,147 +880,154 @@ paths:
                     $ref: "#/components/responses/404"
                 "500":
                     $ref: "#/components/responses/500"
-    /subjects/search/names/{name}:
-        get:
-            tags: [subjects]
-            parameters:
-                - $ref: "#/components/parameters/namePathParam"
-            responses:
-                "200":
-                    description: Subject retrive  successful
-                    content:
-                        "application/json":
-                            schema:
-                                type: object
-                                properties:
-                                    message:
-                                        type: string
-                                        example: Subject retrive  successful
-                                    data:
-                                        $ref: "#/components/schemas/Subject"
 
-                "400":
-                    $ref: "#/components/responses/400"
-                "401":
-                    $ref: "#/components/responses/401"
-                "404":
-                    $ref: "#/components/responses/404"
-                "500":
-                    $ref: "#/components/responses/500"
+    # search a subject by name
+    # /subjects/search/names/{name}:
+    #     get:
+    #         tags: [subjects]
+    #         parameters:
+    #             - $ref: "#/components/parameters/namePathParam"
+    #         responses:
+    #             "200":
+    #                 description: Subject retrive  successful
+    #                 content:
+    #                     "application/json":
+    #                         schema:
+    #                             type: object
+    #                             properties:
+    #                                 message:
+    #                                     type: string
+    #                                     example: Subject retrive  successful
+    #                                 data:
+    #                                     $ref: "#/components/schemas/Subject"
 
-    /subjects/update/codes/{code}:
-        put:
-            tags: [subjects]
-            parameters:
-                - $ref: "#/components/parameters/codePathParam"
-            requestBody:
-                content:
-                    "application/json":
-                        schema:
-                            type: object
-                            properties:
-                                name:
-                                    type: string
-                                    example: Python programming
-                                code:
-                                    type: string
-                                    example: 285585
-                                theoryFailed:
-                                    type: array
-                                    example: [608690, 608691, 608692]
-                                practicalFailed:
-                                    type: array
-                                    example: [608690, 608691, 608692]
-                            required:
-                                - code
-            responses:
-                "200":
-                    description: Subject updated  successfully
-                    content:
-                        "application/json":
-                            schema:
-                                type: object
-                                properties:
-                                    message:
-                                        type: string
-                                        example: Subject updated  successfully
-                                    data:
-                                        $ref: "#/components/schemas/Subject"
-                "400":
-                    $ref: "#/components/responses/400"
-                "401":
-                    $ref: "#/components/responses/401"
-                "404":
-                    $ref: "#/components/responses/404"
-                "500":
-                    $ref: "#/components/responses/500"
-    /subjects/update/names/{name}:
-        put:
-            tags: [subjects]
-            parameters:
-                - $ref: "#/components/parameters/namePathParam"
-            requestBody:
-                content:
-                    "application/json":
-                        schema:
-                            type: object
-                            properties:
-                                name:
-                                    type: string
-                                    example: Python programming
-                                code:
-                                    type: string
-                                    example: 285585
-                                theoryFailed:
-                                    type: array
-                                    example: [608690, 608691, 608692]
-                                practicalFailed:
-                                    type: array
-                                    example: [608690, 608691, 608692]
-                            required:
-                                - name
-            responses:
-                "200":
-                    description: Subject updated  successfully
-                    content:
-                        "application/json":
-                            schema:
-                                type: object
-                                properties:
-                                    message:
-                                        type: string
-                                        example: Subject updated  successfully
-                                    data:
-                                        $ref: "#/components/schemas/Subject"
-                "400":
-                    $ref: "#/components/responses/400"
-                "401":
-                    $ref: "#/components/responses/401"
-                "404":
-                    $ref: "#/components/responses/404"
-                "500":
-                    $ref: "#/components/responses/500"
+    #             "400":
+    #                 $ref: "#/components/responses/400"
+    #             "401":
+    #                 $ref: "#/components/responses/401"
+    #             "404":
+    #                 $ref: "#/components/responses/404"
+    #             "500":
+    #                 $ref: "#/components/responses/500"
 
-    /subjects/delete/{code}:
-        delete:
-            tags: [subjects]
-            parameters:
-                - $ref: "#/components/parameters/codePathParam"
-            responses:
-                "204":
-                    description: Subject deleted  successfully
-                "400":
-                    $ref: "#/components/responses/400"
-                "401":
-                    $ref: "#/components/responses/401"
-                "404":
-                    $ref: "#/components/responses/404"
-                "500":
-                    $ref: "#/components/responses/500"
+    # update a subject by code
+    # /subjects/update/codes/{code}:
+    #     put:
+    #         tags: [subjects]
+    #         parameters:
+    #             - $ref: "#/components/parameters/codePathParam"
+    #         requestBody:
+    #             content:
+    #                 "application/json":
+    #                     schema:
+    #                         type: object
+    #                         properties:
+    #                             name:
+    #                                 type: string
+    #                                 example: Python programming
+    #                             code:
+    #                                 type: string
+    #                                 example: 285585
+    #                             theoryFailed:
+    #                                 type: array
+    #                                 example: [608690, 608691, 608692]
+    #                             practicalFailed:
+    #                                 type: array
+    #                                 example: [608690, 608691, 608692]
+    #                         required:
+    #                             - code
+    #         responses:
+    #             "200":
+    #                 description: Subject updated  successfully
+    #                 content:
+    #                     "application/json":
+    #                         schema:
+    #                             type: object
+    #                             properties:
+    #                                 message:
+    #                                     type: string
+    #                                     example: Subject updated  successfully
+    #                                 data:
+    #                                     $ref: "#/components/schemas/Subject"
+    #             "400":
+    #                 $ref: "#/components/responses/400"
+    #             "401":
+    #                 $ref: "#/components/responses/401"
+    #             "404":
+    #                 $ref: "#/components/responses/404"
+    #             "500":
+    #                 $ref: "#/components/responses/500"
+    # /subjects/update/names/{name}:
+    #     put:
+    #         tags: [subjects]
+    #         parameters:
+    #             - $ref: "#/components/parameters/namePathParam"
+    #         requestBody:
+    #             content:
+    #                 "application/json":
+    #                     schema:
+    #                         type: object
+    #                         properties:
+    #                             name:
+    #                                 type: string
+    #                                 example: Python programming
+    #                             code:
+    #                                 type: string
+    #                                 example: 285585
+    #                             theoryFailed:
+    #                                 type: array
+    #                                 example: [608690, 608691, 608692]
+    #                             practicalFailed:
+    #                                 type: array
+    #                                 example: [608690, 608691, 608692]
+    #                         required:
+    #                             - name
+    #         responses:
+    #             "200":
+    #                 description: Subject updated  successfully
+    #                 content:
+    #                     "application/json":
+    #                         schema:
+    #                             type: object
+    #                             properties:
+    #                                 message:
+    #                                     type: string
+    #                                     example: Subject updated  successfully
+    #                                 data:
+    #                                     $ref: "#/components/schemas/Subject"
+    #             "400":
+    #                 $ref: "#/components/responses/400"
+    #             "401":
+    #                 $ref: "#/components/responses/401"
+    #             "404":
+    #                 $ref: "#/components/responses/404"
+    #             "500":
+    #                 $ref: "#/components/responses/500"
+
+    # /subjects/delete/{code}:
+    #     delete:
+    #         tags: [subjects]
+    #         parameters:
+    #             - $ref: "#/components/parameters/codePathParam"
+    #         responses:
+    #             "204":
+    #                 description: Subject deleted  successfully
+    #             "400":
+    #                 $ref: "#/components/responses/400"
+    #             "401":
+    #                 $ref: "#/components/responses/401"
+    #             "404":
+    #                 $ref: "#/components/responses/404"
+    #             "500":
+    #                 $ref: "#/components/responses/500"
 
     /upload:
         post:
             tags: [upload]
+            description: Upload a file
+            security:
+                - bearerAuth: []
+
             requestBody:
                 content:
                     "multipart/form-data":
@@ -995,6 +1056,10 @@ paths:
     /subjects/{code}/remove-rolls:
         put:
             tags: [subjects]
+            summary: Remove rolls from a subject
+            description: Remove rolls from a subject
+            security:
+                - bearerAuth: []
             parameters:
                 - $ref: "#/components/parameters/codePathParam"
             requestBody:
@@ -1033,6 +1098,10 @@ paths:
     /subjects/{code}/add-rolls:
         put:
             tags: [subjects]
+            summary: Add rolls to a subject
+            description: Add rolls to a subject
+            security:
+                - bearerAuth: []
             parameters:
                 - $ref: "#/components/parameters/codePathParam"
             requestBody:

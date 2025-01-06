@@ -1,5 +1,5 @@
 /** @format */
-
+import authenticate from "@middlewares/authenticate";
 const router = require("express").Router();
 import {
     userCreateController,
@@ -12,16 +12,16 @@ import {
     userUpdateAllDataController,
 } from "@controllers/users/index";
 
-router.post("/", userCreateController);
-router.get("/", userFindAllController);
+router.post("/", authenticate, userCreateController);
+router.get("/", authenticate, userFindAllController);
 
-router.put("/:id", userUpdateByIdController);
-router.get("/:id", userFindByIdController);
-router.delete("/:id", userDeleteByIdController);
+router.put("/:id", authenticate, userUpdateByIdController);
+router.get("/:id", authenticate, userFindByIdController);
+router.delete("/:id", authenticate, userDeleteByIdController);
 
-router.put("/update/:id", userUpdateAllDataController);
+router.put("/update/:id", authenticate, userUpdateAllDataController);
 
-router.get("/search/phone/:phone", findUserByPhoneController);
-router.get("/search/email/:email", findUserByEmailController);
+router.get("/search/phone/:phone", authenticate, findUserByPhoneController);
+router.get("/search/email/:email", authenticate, findUserByEmailController);
 
 export default router;

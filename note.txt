@@ -6,10 +6,11 @@ else cases :
 
 TODO:  Authentication 
 TODO:  Authorization 
+TODO:  create a Admin when app is running
 TODO:  slove issue for serving docs
 TODO:  Forgot password (if a user forget pass, admin will update pass manualy)
 
-TODO: add status(accountStatus) query params for find all users
+TODO: add sortBy(createdAt or updatedAt) query params for find all users
 
 
 TODO:  demo deployment
