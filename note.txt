@@ -4,7 +4,6 @@ else cases :
 2. if data retrived two or 3 years ? then what should to for that ?
 
 
-TODO:  Authentication 
 TODO:  Authorization 
 TODO:  create a Admin when app is running
 TODO:  slove issue for serving docs

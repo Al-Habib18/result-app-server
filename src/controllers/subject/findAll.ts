@@ -8,13 +8,18 @@ import getHATEOAS from "../../utils/hetos";
 
 const findAllController = async (req: Request, res: Response) => {
     try {
-        const { page, limit } = req.query;
+        const { page, limit, code } = req.query;
         const defaultLimit = Number(limit);
         const defaultPage = Number(page);
+
+        const codeString = code ? String(code) : undefined;
+
+        console.log("codeString: ", codeString);
 
         const parsedParams = queryParamsSchema.safeParse({
             limit: defaultLimit,
             page: defaultPage,
+            code: codeString,
         });
         if (!parsedParams.success) {
             return res.status(400).json({
@@ -23,7 +28,7 @@ const findAllController = async (req: Request, res: Response) => {
             });
         }
 
-        const subjects = await findAll(defaultPage, defaultLimit);
+        const subjects = await findAll(defaultPage, defaultLimit, codeString);
 
         const totalItems: number = await countTotalSubject();
         const pagination = getPagination(totalItems, defaultLimit, defaultPage);

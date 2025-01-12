@@ -320,38 +320,6 @@ paths:
 
                 "500":
                     $ref: "#/components/responses/500"
-    /users/forget-password/{id}:
-        put:
-            tags: [users]
-            description: forget password
-            security:
-                - bearerAuth: []
-            summary: forget password
-            parameters:
-                - $ref: "#/components/parameters/idPathParam"
-            responses:
-                "200":
-                    description: Password changed successfully
-                    content:
-                        "application/json":
-                            schema:
-                                type: object
-                                properties:
-                                    message:
-                                        type: string
-                                        example: Password changed successfully
-
-                "400":
-                    $ref: "#/components/responses/400"
-
-                "401":
-                    $ref: "#/components/responses/401"
-
-                "404":
-                    $ref: "#/components/responses/404"
-
-                "500":
-                    $ref: "#/components/responses/500"
 
     /users/search/email/{email}:
         get:
@@ -593,6 +561,47 @@ paths:
                     $ref: "#/components/responses/401"
                 "404":
                     $ref: "#/components/responses/404"
+                "500":
+                    $ref: "#/components/responses/500"
+    /auth/forget-password:
+        put:
+            tags: [users]
+            description: forget password
+            security:
+                - bearerAuth: []
+            summary: forget password
+            parameters:
+                - $ref: "#/components/parameters/idPathParam"
+            requestBody:
+                content:
+                    "application/json":
+                        schema:
+                            type: object
+                            properties:
+                                password:
+                                    type: string
+                                    example: password
+            responses:
+                "200":
+                    description: Password changed successfully
+                    content:
+                        "application/json":
+                            schema:
+                                type: object
+                                properties:
+                                    message:
+                                        type: string
+                                        example: Password changed successfully
+
+                "400":
+                    $ref: "#/components/responses/400"
+
+                "401":
+                    $ref: "#/components/responses/401"
+
+                "404":
+                    $ref: "#/components/responses/404"
+
                 "500":
                     $ref: "#/components/responses/500"
 
