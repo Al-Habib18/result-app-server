@@ -30,8 +30,9 @@ const addRollsController = async (req: Request, res: Response) => {
 
         const data = {
             code,
-            theoryFailedRolls: theoryFailed,
-            practicalFailedRolls: practicalFailed,
+            name: isExistsSubject.name || "",
+            theoryFailed: theoryFailed,
+            practicalFailed: practicalFailed,
         };
 
         const updatedSubject = await addFailedRolls(data);

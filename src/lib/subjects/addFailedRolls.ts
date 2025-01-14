@@ -3,17 +3,16 @@
 import prisma from "../../schemas/index"; // Adjust path to your Prisma client
 import findByCode from "./findByCode";
 
-export default async function addFailedRolls(data: {
+type Subject = {
     code: string;
-    theoryFailedRolls?: string[];
-    practicalFailedRolls?: string[];
-}) {
+    name: string;
+    theoryFailed: string[];
+    practicalFailed: string[];
+};
+
+export default async function addFailedRolls(data: Subject) {
     try {
-        const {
-            code,
-            theoryFailedRolls = [],
-            practicalFailedRolls = [],
-        } = data;
+        const { code, theoryFailed, practicalFailed } = data;
         if (!code) {
             throw new Error("Subject code is required.");
         }
@@ -34,23 +33,26 @@ export default async function addFailedRolls(data: {
 
         // Add new failed rolls and remove duplicates
         const updatedTheoryFailed = Array.from(
-            new Set([...existingTheoryFailed, ...theoryFailedRolls])
+            new Set([...existingTheoryFailed, ...theoryFailed])
         );
         const updatedPracticalFailed = Array.from(
-            new Set([...existingPracticalFailed, ...practicalFailedRolls])
+            new Set([...existingPracticalFailed, ...practicalFailed])
         );
 
+        //TODO: Remove duplicates doesn't work properly
         // Remove duplicates
-        const theoryFailed = Array.from(new Set(updatedTheoryFailed));
-        const practicalFailed = Array.from(new Set(updatedPracticalFailed));
+        const uniqueTheoryFailed = Array.from(new Set(updatedTheoryFailed));
+        /*         const uniquePracticalFailed = Array.from(
+            new Set(updatedPracticalFailed)
+        ); */
 
         // Update the subject in the database
         const updatedSubject = await prisma.subject.update({
             where: { code },
             data: {
                 ...subject,
-                theoryFailed: theoryFailed,
-                practicalFailed: practicalFailed,
+                theoryFailed: uniqueTheoryFailed,
+                practicalFailed: updatedPracticalFailed,
             },
             select: {
                 id: true,
