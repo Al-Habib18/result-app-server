@@ -14,8 +14,6 @@ const findAllController = async (req: Request, res: Response) => {
 
         const codeString = code ? String(code) : undefined;
 
-        console.log("codeString: ", codeString);
-
         const parsedParams = queryParamsSchema.safeParse({
             limit: defaultLimit,
             page: defaultPage,

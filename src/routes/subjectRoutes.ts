@@ -5,6 +5,7 @@ const router = require("express").Router();
 import {
     createController,
     findAllController,
+    deleteAllController,
     findByCodeController,
     // findByNameController,deleteByCodeController,    updateByCodeController,
     findByIdController,
@@ -16,6 +17,7 @@ import {
 
 router.post("/", /* authenticate, */ createController);
 router.get("/", /* authenticate,  */ findAllController);
+router.delete("/", /* authenticate, */ deleteAllController);
 
 router.get("/search/codes/:code", /*  authenticate, */ findByCodeController);
 // router.get("/search/names/:name", authenticate, findByNameController);

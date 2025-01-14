@@ -11,10 +11,12 @@ import updateByIdController from "./updateById";
 import updateByCodeController from "./updateByCode";
 import addRollsController from "../subject/addFailedRolls";
 import removeRollsController from "../subject/removeFailedRolls";
+import deleteAllController from "./deleteAll";
 
 export {
     createController,
     findAllController,
+    deleteAllController,
     findByCodeController,
     findByNameController,
     findByIdController,
