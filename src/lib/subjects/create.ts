@@ -1,16 +1,22 @@
 /** @format */
 
 import prisma from "../../schemas/index";
-
-const createSubject = async (data: {
+type Subject = {
     code: string;
-    name: string | "";
-    theoryFailed: string[] | [];
-    practicalFailed: string[] | [];
-}) => {
+    name: string;
+    theoryFailed: string[];
+    practicalFailed: string[];
+};
+
+const createSubject = async (data: Subject) => {
     try {
         const subject = await prisma.subject.create({
-            data,
+            data: {
+                code: data.code,
+                name: data.name,
+                theoryFailed: data.theoryFailed,
+                practicalFailed: data.practicalFailed,
+            },
             select: {
                 id: true,
                 code: true,

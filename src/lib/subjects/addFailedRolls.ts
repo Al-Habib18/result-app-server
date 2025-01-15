@@ -41,7 +41,7 @@ export default async function addFailedRolls(data: Subject) {
 
         //TODO: Remove duplicates doesn't work properly
         // Remove duplicates
-        const uniqueTheoryFailed = Array.from(new Set(updatedTheoryFailed));
+        // const uniqueTheoryFailed = Array.from(new Set(updatedTheoryFailed));
         /*         const uniquePracticalFailed = Array.from(
             new Set(updatedPracticalFailed)
         ); */
@@ -51,7 +51,7 @@ export default async function addFailedRolls(data: Subject) {
             where: { code },
             data: {
                 ...subject,
-                theoryFailed: uniqueTheoryFailed,
+                theoryFailed: updatedTheoryFailed,
                 practicalFailed: updatedPracticalFailed,
             },
             select: {

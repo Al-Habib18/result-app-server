@@ -46,7 +46,7 @@ const uploadController = async (req: Request, res: Response) => {
             const { code } = subject;
             const isExistsSubject = await findByCode(code);
             if (!isExistsSubject) {
-                await createSubject(subject); // create a new subject
+                await createSubject(subject);
             }
 
             // push theroyFailed and practicalFailed

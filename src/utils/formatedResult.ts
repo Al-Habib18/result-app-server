@@ -16,8 +16,11 @@ const getFormattedResults = (
 
         subjectCodes.forEach((code) => {
             const [subjectBaseCode, type] = code.split("(");
+            console.log("subjectBaseCode: ", subjectBaseCode);
+            console.log("type: ", type);
             const isTheoryFailed = type === "T)";
-            const isBothFailed = type === "T,P)" || "P,T)";
+            const isPracticalFailed = type === "P)";
+            // const isBothFailed = type === "T,P)" || "P,T)"; //TODO: solve this issue
 
             if (!formattedData[subjectBaseCode]) {
                 formattedData[subjectBaseCode] = {
@@ -28,18 +31,20 @@ const getFormattedResults = (
                 };
             }
 
-            if (isBothFailed) {
+            /*             if (isBothFailed) {
                 formattedData[subjectBaseCode].theoryFailed.push(
                     Number(rollNumber)
                 );
                 formattedData[subjectBaseCode].practicalFailed.push(
                     Number(rollNumber)
                 );
-            } else if (isTheoryFailed) {
+            } else */
+            if (isTheoryFailed) {
                 formattedData[subjectBaseCode].theoryFailed.push(
                     Number(rollNumber)
                 );
-            } else {
+            }
+            if (isPracticalFailed) {
                 formattedData[subjectBaseCode].practicalFailed.push(
                     Number(rollNumber)
                 );
@@ -47,7 +52,10 @@ const getFormattedResults = (
         });
     });
 
-    return Object.values(formattedData);
+    const formattedResults = Object.values(formattedData);
+    // console.log("formattedResults: ", formattedResults);
+
+    return formattedResults;
 };
 
 export default getFormattedResults;

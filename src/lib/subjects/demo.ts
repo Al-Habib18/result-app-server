@@ -19,8 +19,6 @@ export default async function demoAddFailedRolls(data: {
             throw new Error("Subject code is required.");
         }
 
-        console.log("before : --- ", theoryFailedRolls);
-
         // Find the subject by its code
         const subject = await findByCode(code);
         if (!subject) {

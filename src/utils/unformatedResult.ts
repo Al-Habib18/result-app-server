@@ -1,12 +1,13 @@
 /** @format */
 
 // src/utils/unformattedResult.ts
-const regex = /(\d{6})\s*\{\s*((?:\d{5}\(T\)(?:,\s*)?)*)\s*\}/g;
+// const regex = /(\d{6})\s*\{\s*((?:\d{5}\(T\)(?:,\s*)?)*)\s*\}/g;
+const regex = /(\d{6})\s*\{\s*((?:\d{5}\((?:T|P|T,P|P,T)\)(?:,\s*)?)*)\s*\}/g;
 
 const getUnformattedResult = (
     text: string
-): Array<{ rollNumber: string, subjectCodes: string[] }> => {
-    const results: Array<{ rollNumber: string, subjectCodes: string[] }> = [];
+): Array<{ rollNumber: string; subjectCodes: string[] }> => {
+    const results: Array<{ rollNumber: string; subjectCodes: string[] }> = [];
     let match;
 
     while ((match = regex.exec(text)) !== null) {
