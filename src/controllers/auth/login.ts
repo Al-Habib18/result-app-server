@@ -30,6 +30,8 @@ const loginController = async (req: Request, res: Response) => {
             user.password
         );
 
+        console.log("isMatch :: ", isMatch);
+
         if (!isMatch) {
             return badRequest(res, "Invalid credentials");
         } /*TODO: else if (!user.verified) {
@@ -54,7 +56,7 @@ const loginController = async (req: Request, res: Response) => {
             name: user.name,
             role: user.role,
         });
-        /*         // delete old refresh token
+        /*         //TODO: delete old refresh token
         await deleteRefresh(user.id); */
 
         return res.status(200).json({

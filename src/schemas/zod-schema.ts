@@ -16,7 +16,7 @@ export const codeParamSchema = z
 export const queryParamsSchema = z.object({
     limit: z.number().positive().max(50).optional(),
     page: z.number().positive().min(1).optional(),
-    status: z.enum(["PENDING", "ACTIVE", "SUSPENDED"]).optional(),
+    status: z.enum(["PENDING", "ACTIVE", "INACTIVE", "SUSPENDED"]).optional(),
     code: z
         .string()
         .regex(/^\+?[0-9]\d{1,14}$/, "Invalid Code")

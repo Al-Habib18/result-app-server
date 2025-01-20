@@ -12,7 +12,6 @@ export default async function findAll(
         if (page === undefined) page = 1;
         if (limit === undefined) limit = 10;
 
-        console.log("code: ", code);
         if (code) {
             const subjects = await prisma.subject.findMany({
                 where: { code: code },

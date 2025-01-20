@@ -15,17 +15,17 @@ import {
     removeRollsController,
 } from "@controllers/subject/index";
 
-router.post("/", /* authenticate, */ createController);
-router.get("/", /* authenticate,  */ findAllController);
-router.delete("/", /* authenticate, */ deleteAllController);
+router.post("/", authenticate, createController);
+router.get("/", authenticate, findAllController);
+router.delete("/", authenticate, deleteAllController);
 
-router.get("/search/codes/:code", /*  authenticate, */ findByCodeController);
+router.get("/search/codes/:code", authenticate, findByCodeController);
 // router.get("/search/names/:name", authenticate, findByNameController);
 
 router.put("/:id", authenticate, updateByIdController);
 // router.put("/update/codes/:code", authenticate, updateByCodeController);
 
-router.get("/:id", /* authenticate, */ findByIdController);
+router.get("/:id", authenticate, findByIdController);
 router.delete("/:id", authenticate, deleteByIdController);
 // router.delete("/delete/:code", authenticate, deleteByCodeController);
 
