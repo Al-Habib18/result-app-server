@@ -23,19 +23,23 @@ const userUpdateAllDataController = async (req: Request, res: Response) => {
             verified,
             status,
         });
+
         if (!parsedParams.success) {
             return badRequest(res, parsedParams.error.issues[0].message);
         }
+
         if (!id) return badRequest(res, "Id is required");
 
         if (Object.keys(req.body).length === 0)
             return badRequest(res, "No data to update");
 
         const user = await findByEmail(email);
-        if (user) return badRequest(res, "Email already exists");
+        if (user && user.email !== email)
+            return badRequest(res, "Email already exists");
 
         const userPhone = await findByPhone(phone);
-        if (userPhone) return badRequest(res, "Phone already exists");
+        if (userPhone && userPhone.phone !== phone)
+            return badRequest(res, "Phone already exists");
 
         const updatedUser = await updateAllData(id, {
             name,
