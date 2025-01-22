@@ -1,5 +1,6 @@
 /** @format */
 import authenticate from "@middlewares/authenticate";
+import ownership from "@middlewares/ownership";
 const router = require("express").Router();
 import {
     userCreateController,
@@ -12,16 +13,28 @@ import {
     userUpdateAllDataController,
 } from "@controllers/users/index";
 
-router.post("/", authenticate, userCreateController);
-router.get("/", authenticate, userFindAllController);
+router.post("/", authenticate, /* admin */ userCreateController);
+router.get("/", authenticate, /* admin */ userFindAllController);
 
-router.put("/:id", authenticate, userUpdateByIdController);
-router.get("/:id", authenticate, userFindByIdController);
-router.delete("/:id", authenticate, userDeleteByIdController);
+router.put("/:id", authenticate, ownership, userUpdateByIdController);
+router.get("/:id", authenticate, ownership, userFindByIdController);
+router.delete("/:id", authenticate, ownership, userDeleteByIdController);
 
-router.put("/update/:id", authenticate, userUpdateAllDataController);
+router.put(
+    "/update/:id",
+    authenticate,
+    /*TODO: admin */ userUpdateAllDataController
+);
 
-router.get("/search/phone/:phone", authenticate, findUserByPhoneController);
-router.get("/search/email/:email", authenticate, findUserByEmailController);
+router.get(
+    "/search/phone/:phone",
+    authenticate,
+    /*TODO: admin */ findUserByPhoneController
+);
+router.get(
+    "/search/email/:email",
+    authenticate,
+    /*TODO: admin */ findUserByEmailController
+);
 
 export default router;
