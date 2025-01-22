@@ -5,14 +5,13 @@ import cors from "cors";
 import express, {
     Application /* Request, Response, NextFunction  */,
 } from "express";
+// import createRootUser from "./createRootUser";
 
 /* import path from "path";
 import swaggerUI, { SwaggerOptions } from "swagger-ui-express";
 import YML from "yamljs";
  */
 import router from "@routes/index";
-
-import deleteMany from "./deleteMany";
 
 const app: Application = express();
 app.use(express.json());
@@ -31,14 +30,13 @@ app.use(router);
 ) as SwaggerOptions;
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs)); */
 
+/* const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "3E5tZ@gmail.com";
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "123456";
+
+createRootUser(ADMIN_EMAIL, ADMIN_PASSWORD); */
+
 // Check Health
 app.get("/health", (_req, res) => {
-    res.status(200).json({ message: "UP" });
-});
-
-//TODO: remove this funtion later
-app.delete("/delete", (_req, res) => {
-    deleteMany();
     res.status(200).json({ message: "UP" });
 });
 
